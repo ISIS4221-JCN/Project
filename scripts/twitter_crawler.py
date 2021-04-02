@@ -34,7 +34,7 @@ def get_rules(headers):
     response = requests.get(
         "https://api.twitter.com/2/tweets/search/stream/rules", headers=headers
     )
-    if response.status_code != 200:, bearer_token
+    if response.status_code != 200:
         raise Exception(
             "Cannot get rules (HTTP {}): {}".format(response.status_code, response.text)
         )
@@ -93,7 +93,7 @@ def set_rules(headers, lang):
     response = requests.post(
         "https://api.twitter.com/2/tweets/search/stream/rules",
         headers=headers,
-        json=payload,twitter
+        json=payload
     )
     if response.status_code != 201:
         raise Exception(
@@ -122,7 +122,7 @@ def get_stream(headers, path, counter):
         raise Exception(
             "Cannot get stream (HTTP {}): {}".format(
                 response.status_code, response.text
-            )twitter
+            )
         )
     for response_line in response.iter_lines():
         if response_line:
@@ -135,7 +135,7 @@ def get_stream(headers, path, counter):
                         'text': json_response['data']['text']}
             file = open(path+'TWITTER_'+str(counter)+'.json', 'w+')
             json.dump(tweet_dict, file, indent=4)
-            file.close()twitter
+            file.close()
             counter += 1
 
 def main(args):
