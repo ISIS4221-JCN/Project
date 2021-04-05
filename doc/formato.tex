@@ -1,1 +1,37 @@
 \section{Formato de almacenamiento}
+
+\subsection{Organización de los documentos}
+El formato seleccionado para almacenar cada uno de los archivos es JavaScript Objetct Notation (JSON) gracias a su facilidad de almacenamiento y lectura con librerías compatibles con Python. La distribución de los archivos recuperados costa de carpetas de acuerdo al idioma: 'en', 'es' o 'fr'. Dentro de cada una de las carpetas se encuentran los archivos de cada fuente con el nombre del origen en mayúscula seguido de un guión bajo y un identificador: \textit{TWITTER\_1.json}, \textit{BBC\_1.json}, \textit{REDDIT\_1.json}.\\
+
+A continuación, se muestra un ejemplo de un tweet.
+
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+    "source": "twitter",
+    "url": "https://twitter.com/anyuser/status/1377678719272284164",
+    "lang": "en",
+    "date": "2021-04-01 17:46:17",
+    "author": "SteinbachOnline",
+    "text": "COVID-19: Another Death In Steinbach https://t.co/CZWur6W0Mo"
+}
+\end{lstlisting}
+
+Cada archivo tendrá como mínimos la siguiente información:
+\begin{itemize}
+    \item \textit{source}: corresponde a la fuente de donde se obtuvo el archivo.
+    \item \textit{url}: dirrección que redirigja al archivo original.
+    \item \textit{lang}: idioma en que se encuentra escrito el documento.
+    \item \textit{date}: fecha en que fue puclicado el documento.
+    \item \textit{author}: autor del documento.
+    \item \textit{text}: texto que compone el documento recuperado.
+\end{itemize}
+
+\subsection{Lectura de los archivos}
+A continuación, se muestra como leer fácilmente un archivo \textit{json} utilizando Pyhton.
+
+\begin{lstlisting}[language=Python,firstnumber=1]
+import json
+
+with open('data.txt') as json_file:
+    data = json.load(json_file)
+\end{lstlisting}

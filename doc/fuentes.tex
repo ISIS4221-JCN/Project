@@ -1,1 +1,28 @@
 \section{Selección y explotación de fuentes}
+
+\subsection{Twitter}
+Para descargar tweets se utilizó la API oficial de la red social. Para ello fue necesario pedir acceso como desarrollador, y adicionalmente categoría de 'Academic Research' para poder crear un \textit{streamer} que continuamente esté descargando los archivos de lared social.\\ 
+
+Como medida preventiva a que no se obtenga la categoría de investigación académica se procede con la creación de un \textit{script} que recupere todos los Tweets en tiempo real que cumplen con una serie de normas definidas por el usuario para filtrar la información. Este \textit{script} permite descargar información con la categoría estándar. Se crea adicionalmente un archivo que realice búsqueda en los archivos de la red social y retorne aquellos que cumplen con las normas de búsqueda. Este archivo sí requiere tener los permisos de categoría de investigación académica.
+
+\subsection{Tumblr}
+Al igual que en el caso de Twitter se utiliza la API oficial de la red social para la descarga de los archivos.\\
+
+Cada solicitud que se hace a Tumblr recupera archivos bajo un tag específico. Lastimosamente, hay un límite de 20 archivos por cada solicitud y 432.000 llamados por día. Además de que no permite hacer una búsqueda organizada sino que en muchas ocasiones retorna una misma respuesta a pesar de ser una nueva solicitud. Para lidiar con este problema, se crea una lista de IDs leídos para así descartar aquellos que estén ya almacenados.\\ 
+
+Adicionalmente es necesario utilizar una librería de detección de lenguaje dado que la información que provee la solicitud no la entrega. Se utiliza \textit{langdetect} de Python para poder almacenar los archivos acorde a como e explicó en la sección correspondiente.
+
+\subsection{Noticias}
+Recuperar noticias de diferentes sitios web es un proceso en el cual se presentan tanto similaridades como diferencias entre las diferentes fuentes. En primer lugar se pueden categorizar los sitios de noticias entre aquellos que disponen de APIs para acceder a las noticias y aquellos que no. Algunos de los sitios que disponen de APIs para acceder a las noticias se presentan a continuación:
+
+\begin{itemize}
+    \item \textit{New York Times}: permite acceder a noticias del registro histórico del periódico. Para hacer uso de esta API se debe realizar un proceso de registro y solicitar una llave de acceso.
+    
+    \item \textit{The Guardian}: permite acceder a todo el contenido del periódico tras un proceso de registro. Está limitado a doce (12) llamadas por segundo con un máximo de cinco mil (5000) llamadas diarias.
+    
+    \item \textit{Reuters}: dispone de un API que permite acceder al contenido tras un proceso de registro.
+\end{itemize}
+
+En términos generales, las APIs de las agencias de noticias permiten acceder a la información rápidamente y sin necesidad de un preprocesamiento extensivo. No obstante, las APIs requieren de un proceso de registro y solicitud de llaves de acceso que truncan el proceso de búsqueda. Bajo este panorama, la primera opción para recuperar la información consiste en recuperar los sitios web de noticias y extraer la información relevante a partir de estos. 
+
+Con el fin de determinar 
