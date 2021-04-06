@@ -1,4 +1,5 @@
 \section{Estado de la recopilación de datos}
+
 \subsection{Twitter}
 Se inicia con la extracción de tweets en tiempo real para inglés y español, idiomas cuyo flujo de tweets es bastante alto. Una vez se tiene un total cercano a 13.000 tweets para cada idioma se procede a iniciar descargas de alemán, francés e italiano. Dado que el flujo en estos idiomas es mucho menor, se deja algún tiempo en ejecución recopilando tweets.\\
 
@@ -9,3 +10,66 @@ Posteriormente, se ejecuta el \textit{script} de recuperar tweets recientes rela
     \item \textbf{Tweets en francés:} 25.352
     \item \textbf{Tweets en italiano:} 13.261
 \end{itemize}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        \textbf{Idioma} & \textbf{Cantidad} \\
+        Español & 58.026 \\
+        Inglés & 58.706 \\
+        Francés & 25.352 \\
+        Italiano & 13.261
+    \end{tabular}
+    \caption{Distribución de las tweets recolectados según su idioma}
+    \label{tab:news_results}
+\end{table}
+
+\subsection{Noticias}
+Al momento de la entrega de este reporte se cuenta con $57601$ URLs de artículos de noticias distribuídos como según el idioma como se presenta en la tabla \ref{tab:news_results}. Para cada artículo, aparte de la URL, se conoce su título, medio de comunicación, idioma y un identificador único que asigna Google. En este sentido, la búsqueda de las URLs mediante el buscador Google ha permitido identificar noticias diferentes y evitar la incorporación de duplicados en la base de datos. La tabla \ref{tab:news_parameters} presenta un resumen de los parámetros utilizados para la búsqueda de estas noticias.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        \textbf{Idioma} & \textbf{Cantidad} \\
+        Español & 7431 \\
+        Inglés & 22734 \\
+        Francés & 17012 \\
+        Italiano & 10424
+        
+    \end{tabular}
+    \caption{Distribución de las URLs recolectadas según su idioma.}
+    \label{tab:news_results}
+\end{table}021-04-06-1753
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        \textbf{Parámetro} & \textbf{Valor} \\
+        Fecha de Inicio & Septiembre 1 de 2019 \\
+        Fecha de Finalización & Enero 20 de 2021 \\
+        Idiomas & Español, Inglés, Francés, Italiano \\
+        Países & Colombia, Estados Unidos, Francia, Italia \\
+        Palabras Clave & virus, COVID
+    \end{tabular}
+    \caption{Resumen de los parámetros utilizados para la búsqueda de URLs de noticias a modo de verificación.}
+    \label{tab:news_parameters}
+\end{table}
+
+Es importante resaltar que los parámetros presentados en la tabla \ref{tab:news_parameters} fueron definidos con el fin de probar la estrategia de recolección de URLs. En este orden de ideas algunos de los parámetros de búsqueda pueden ser ampliados para aumentar la cantidad de URLs recuperadas. La tabla \ref{tab:news_final_parameters} presenta los nuevos parámetros para los países y palabras claves de la búsqueda. Sin embargo, conforme continúe la recopilación de URLs es posible que cambien estos parámetros.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        \textbf{Parámetro} & \textbf{Valor} \\
+        Países  & México, Guatemala, Honduras, El Salvador, \\
+                & Nicaragua, Costa Rica, Panamá, \\
+                & Colombia, Ecuador, Perú, Bolivia, \\
+                & Paraguay, Uruguay, Argentina, Chile, España, \\021-04-06-1753
+                & Estados Unidos, Inglaterra, Escocia, Irlanda, \\
+                & Australia, Irlanda del Norte, Canadá, \\
+                & Nueva Zelanda, Francia, Italia \\
+        Palabras Clave & virus, COVID, coronavirus, pandemia, \\
+                & cuarentena, vacunas \\
+    \end{tabular}
+    \caption{Nuevos parámetros utilizados para la búsqueda de URLs de noticias.}
+    \label{tab:news_final_parameters}
+\end{table}

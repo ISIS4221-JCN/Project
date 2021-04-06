@@ -1,0 +1,14 @@
+{
+    "start_year": 2019,
+    "start_month": 9,
+    "start_day": 1,
+    "end_year": 2021,
+    "end_month": 4,
+    "end_day": 4,
+    "languages": ["en", "es", "it", "fr"],
+    "countries": ["CO", "US", "IT", "FR"],
+    "keywords": [
+        "virus",
+        "covid"
+    ]
+}
