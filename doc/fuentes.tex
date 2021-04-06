@@ -13,7 +13,7 @@ Cada solicitud que se hace a Tumblr recupera archivos bajo un tag específico. L
 Adicionalmente es necesario utilizar una librería de detección de lenguaje dado que la información que provee la solicitud no la entrega. Se utiliza \textit{langdetect} de Python para poder almacenar los archivos acorde a como e explicó en la sección correspondiente.
 
 \subsection{Noticias}
-Recuperar noticias de diferentes sitios web es un proceso en el cual se presentan tanto similaridades como diferencias entre las diferentes fuentes. En primer lugar se pueden categorizar los sitios de noticias entre aquellos que disponen de APIs para acceder a las noticias y aquellos que no. Algunos de los sitios que disponen de APIs para acceder a las noticias se presentan a continuación:
+La recuperación de las noticias de sus respectivos portales de internet es un proceso en el cual se pueden presentar ciertas particularidades. En primer lugar se pueden categorizar los sitios de noticias entre aquellos que disponen de APIs para acceder a las noticias y aquellos que no. Algunos de los sitios que disponen de APIs para acceder a las noticias se presentan a continuación:
 
 \begin{itemize}
     \item \textit{New York Times}: permite acceder a noticias del registro histórico del periódico. Para hacer uso de esta API se debe realizar un proceso de registro y solicitar una llave de acceso.
@@ -25,4 +25,4 @@ Recuperar noticias de diferentes sitios web es un proceso en el cual se presenta
 
 En términos generales, las APIs de las agencias de noticias permiten acceder a la información rápidamente y sin necesidad de un preprocesamiento extensivo. No obstante, las APIs requieren de un proceso de registro y solicitud de llaves de acceso que truncan el proceso de búsqueda. Bajo este panorama, la primera opción para recuperar la información consiste en recuperar los sitios web de noticias y extraer la información relevante a partir de estos. 
 
-Con el fin de determinar 
+Con el fin de determinar las URLs de los sitios web se hace uso del buscador Google. En este sentido, se puede aprovechar el buscador para recuperar las URLs de las noticias. Posteriormente, se pueden usar estas URLs para acceder a las noticias y extraer de allí la información pertinente. Al realizar la búsqueda de las noticias se pueden definir parámetros como el país de origen, el idioma, la fecha de inicio de la búsqueda, la fecha de final de la búsqueda y las palabras claves a tener en cuenta. Vale la pena considerar que cada búsqueda retorna un máximo de cien noticias, siendo esta la principal limitación de esta estrategia.
