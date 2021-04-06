@@ -11,3 +11,28 @@ Al igual que en el caso de Twitter se utiliza la API oficial de la red social pa
 Cada solicitud que se hace a Tumblr recupera archivos bajo un tag específico. Lastimosamente, hay un límite de 20 archivos por cada solicitud y 432.000 llamados por día. Además de que no permite hacer una búsqueda organizada sino que en muchas ocasiones retorna una misma respuesta a pesar de ser una nueva solicitud. Para lidiar con este problema, se crea una lista de IDs leídos para así descartar aquellos que estén ya almacenados.\\ 
 
 Adicionalmente es necesario utilizar una librería de detección de lenguaje dado que la información que provee la solicitud no la entrega. Se utiliza \textit{langdetect} de Python para poder almacenar los archivos acorde a como e explicó en la sección correspondiente.
+
+\subsection{Reddit}
+
+De forma similar a como se realizó con \textit{Twitter} y con \textit{Tumblr}, se utilizó el API oficial de \textit{Reddit} \cite{RedditDoc} para descargar los \textit{posts} de esta red social. \\
+
+Para poder acceder a esta solo es necesario tener una cuenta, realizar una petición como desarrollador de una aplicación, llenar una breve descripción del proyecto e incluir un enlace de contacto. Una vez hecho esto el \textit{token} de autenticación queda activo por 2 horas (aproximadamente) y se pueden realizar solicitudes hasta 100 \textit{posts} a la vez, limitado a 60 llamados por minuto. \\
+
+Ahora bien, para poder recuperar información especifica relacionada con el COVID, se realizó una búsqueda a través de las secciones que ofrece esta plataforma, conocidas como \textit{subreddits}. Se seleccionaron algunos de los subreddits más populares relacionados con el covid y se realizó la descarga de los posts directamente publicados en estas secciones. Vale la pena destacar que los usuarios típicamente interactúan con en estas secciones únicamente en el idioma establecido, por esta razón fue fácil discriminar por idioma.\\
+
+No obstante, la información disponible en esta plataforma para idiomas distintos al inglés es bastante limitada. Por esta razón, se decidió agregar un filtro que permite agregar subreddits que no necesariamente son exclusivos de covid pero que tratan estos temas con una etiqueta (\textit{flair}). De esta manera, se pueden agregar subreddits como \texttt{/r/noticias\_en\_espanol} o \texttt{/r/argentina} que vienen en el idioma español pero que tienen etiquetas para aquellos \textit{posts} sobre covid. Esto permite descargar una mayor información de temas relacionados con el covid de distintas secciones e idiomas.
+
+\subsection{Noticias}
+La recuperación de las noticias de sus respectivos portales de internet es un proceso en el cual se pueden presentar ciertas particularidades. En primer lugar se pueden categorizar los sitios de noticias entre aquellos que disponen de APIs para acceder a las noticias y aquellos que no. Algunos de los sitios que disponen de APIs para acceder a las noticias se presentan a continuación:
+
+\begin{itemize}
+    \item \textit{New York Times}: permite acceder a noticias del registro histórico del periódico. Para hacer uso de esta API se debe realizar un proceso de registro y solicitar una llave de acceso.
+    
+    \item \textit{The Guardian}: permite acceder a todo el contenido del periódico tras un proceso de registro. Está limitado a doce (12) llamadas por segundo con un máximo de cinco mil (5000) llamadas diarias.
+    
+    \item \textit{Reuters}: dispone de un API que permite acceder al contenido tras un proceso de registro.
+\end{itemize}
+
+En términos generales, las APIs de las agencias de noticias permiten acceder a la información rápidamente y sin necesidad de un preprocesamiento extensivo. No obstante, las APIs requieren de un proceso de registro y solicitud de llaves de acceso que truncan el proceso de búsqueda. Bajo este panorama, la primera opción para recuperar la información consiste en recuperar los sitios web de noticias y extraer la información relevante a partir de estos. 
+
+Con el fin de determinar las URLs de los sitios web se hace uso del buscador Google. En este sentido, se puede aprovechar el buscador para recuperar las URLs de las noticias. Posteriormente, se pueden usar estas URLs para acceder a las noticias y extraer de allí la información pertinente. Al realizar la búsqueda de las noticias se pueden definir parámetros como el país de origen, el idioma, la fecha de inicio de la búsqueda, la fecha de final de la búsqueda y las palabras claves a tener en cuenta. Vale la pena considerar que cada búsqueda retorna un máximo de cien noticias, siendo esta la principal limitación de esta estrategia.
