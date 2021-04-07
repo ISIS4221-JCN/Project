@@ -17,18 +17,35 @@ Posteriormente, se ejecuta el \textit{script} de recuperar tweets recientes rela
     \label{tab:news_results}
 \end{table}
 
-\subsection{Noticias}
-Al momento de la entrega de este reporte se cuenta con $182690$ URLs de artículos de noticias distribuídos como según el idioma como se presenta en la tabla \ref{tab:news_results}. Para cada artículo, aparte de la URL, se conoce su título, medio de comunicación, idioma y un identificador único que asigna Google. En este sentido, la búsqueda de las URLs mediante el buscador Google ha permitido identificar noticias diferentes y evitar la incorporación de duplicados en la base de datos. La tabla \ref{tab:news_parameters} presenta un resumen de los parámetros utilizados para la búsqueda de estas noticias.
+\subsection{Reddit}
+
+Al fecha de entrega de este reporte se han descargado \textit{posts} de un total de 19 \textit{Subreddits} (10 en inglés, 5 en español y 4 en francés) que tratan de temas relacionados con el COVID (e.j. \texttt{/r/Coronavirus}, \texttt{/r/COVID-19Positive}, \textt{/r/covidmx}, etc.) o que contienen etiquetas (\textit{flairs}) relacionadas con el tema. Esto resulta en un total de $19.106$ \textit{posts}, los cuales se distribuyen de la siguiente manera:
 
 \begin{table}[h]
     \centering
     \begin{tabular}{r|l}
         \textbf{Idioma} & \textbf{Cantidad} \\
-        Español & 42425 \\
-        Inglés & 81205 \\
-        Francés & 39256 \\
-        Italiano & 19804
-        
+        Español & 1.318 \\
+        Inglés & 17.426 \\
+        Francés & 362 \\
+    \end{tabular}
+    \caption{Distribución de los \textit{Posts} recolectados según su idioma.}
+    \label{tab:reddit_results}
+\end{table}
+
+Ahora bien, vale la pena destacar que esta información hace referencia únicamente al número de \textit{posts}, a la fecha todavía falta descargar y organizar la información de cada uno de los comentarios, respuestas e hilos de cada uno de los \textit{posts}. Esto va a incrementar considerablemente el número de documentos obtenidos, pues \textit{Reddit} es una red social que suele tener un alto tráfico de información en estas secciones. Adicionalmente, se espera ampliar todavía más los \textit{subreddits} y secciones que se están considerando dentro de la búsqueda.
+
+\subsection{Noticias}
+Al momento de la entrega de este reporte se cuenta con $182.690$ URLs de artículos de noticias distribuídos como según el idioma como se presenta en la tabla \ref{tab:news_results}. Para cada artículo, aparte de la URL, se conoce su título, medio de comunicación, idioma y un identificador único que asigna Google. En este sentido, la búsqueda de las URLs mediante el buscador Google ha permitido identificar noticias diferentes y evitar la incorporación de duplicados en la base de datos. La tabla \ref{tab:news_parameters} presenta un resumen de los parámetros utilizados para la búsqueda de estas noticias. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{r|l}
+        \textbf{Idioma} & \textbf{Cantidad} \\
+        Español & 42.425 \\
+        Inglés & 81.205 \\
+        Francés & 39.256 \\
+        Italiano & 19.804
     \end{tabular}
     \caption{Distribución de las URLs recolectadas según su idioma.}
     \label{tab:news_results}
@@ -69,3 +86,7 @@ Es importante resaltar que los parámetros presentados en la tabla \ref{tab:news
     \caption{Nuevos parámetros utilizados para la búsqueda de URLs de noticias.}
     \label{tab:news_final_parameters}
 \end{table}
+
+\subsection{Revisión de duplicados}
+
+Si bien cada una de las implementaciones realizadas para la descarga de documentos de alguna u otra manera realiza la verificación interna de que el documento descargado sea único, se adicionó un \textit{script} que permite verificar y remover elementos duplicados. Este procedimiento se espera realizar al final de la descarga y organización de todos los documentos relacionados con covid. Este script permite realizar la comparación de documentos a partir de los distintos keys() que se definieron en el formato .json() en la sección 1.1, por lo que si se desea se puede realizar la comparación al nivel de \textit{id}, de \textit{url} o incluso de texto.
