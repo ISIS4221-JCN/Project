@@ -1,17 +1,34 @@
 \section{Estado de la recopilación de datos}
 
+\subsection{Twitter}
+Se inicia con la extracción de tweets en tiempo real para inglés y español, idiomas cuyo flujo de tweets es bastante alto. Una vez se tiene un total cercano a 13.000 tweets para cada idioma se procede a iniciar descargas de alemán, francés e italiano. Dado que el flujo en estos idiomas es mucho menor, se deja algún tiempo en ejecución recopilando tweets.\\
+
+Posteriormente, se ejecuta el \textit{script} de recuperar tweets recientes relacionados con COVID. No obstante, dado que con esta búsqueda no es posible filtrar idiomas se ejecuta es script en periodos diferentes deteniendo cada que se supera el límite de descargas de twitter organizando en carpetas cada uno de los archivos obtenidos. Con esto en mente, al momento de entrega del documento se tienen:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        \textbf{Idioma} & \textbf{Cantidad} \\
+        Español & 58.026 \\
+        Inglés & 58.706 \\
+        Francés & 25.352 \\
+        Italiano & 13.261
+    \end{tabular}
+    \caption{Distribución de las tweets recolectados según su idioma}
+    \label{tab:news_results}
+\end{table}
 
 \subsection{Noticias}
-Al momento de la entrega de este reporte se cuenta con $57601$ URLs de artículos de noticias distribuídos como según el idioma como se presenta en la tabla \ref{tab:news_results}. Para cada artículo, aparte de la URL, se conoce su título, medio de comunicación, idioma y un identificador único que asigna Google. En este sentido, la búsqueda de las URLs mediante el buscador Google ha permitido identificar noticias diferentes y evitar la incorporación de duplicados en la base de datos. La tabla \ref{tab:news_parameters} presenta un resumen de los parámetros utilizados para la búsqueda de estas noticias.
+Al momento de la entrega de este reporte se cuenta con $182690$ URLs de artículos de noticias distribuídos como según el idioma como se presenta en la tabla \ref{tab:news_results}. Para cada artículo, aparte de la URL, se conoce su título, medio de comunicación, idioma y un identificador único que asigna Google. En este sentido, la búsqueda de las URLs mediante el buscador Google ha permitido identificar noticias diferentes y evitar la incorporación de duplicados en la base de datos. La tabla \ref{tab:news_parameters} presenta un resumen de los parámetros utilizados para la búsqueda de estas noticias.
 
 \begin{table}[h]
     \centering
     \begin{tabular}{r|l}
         \textbf{Idioma} & \textbf{Cantidad} \\
-        Español & 7431 \\
-        Inglés & 22734 \\
-        Francés & 17012 \\
-        Italiano & 10424
+        Español & 42425 \\
+        Inglés & 81205 \\
+        Francés & 39256 \\
+        Italiano & 19804
+        
     \end{tabular}
     \caption{Distribución de las URLs recolectadas según su idioma.}
     \label{tab:news_results}
@@ -25,7 +42,8 @@ Al momento de la entrega de este reporte se cuenta con $57601$ URLs de artículo
         Fecha de Finalización & Enero 20 de 2021 \\
         Idiomas & Español, Inglés, Francés, Italiano \\
         Países & Colombia, Estados Unidos, Francia, Italia \\
-        Palabras Clave & virus, COVID
+        & México, Ciudad del Vaticano, Canadá \\
+        Palabras Clave & virus, COVID, pandemia
     \end{tabular}
     \caption{Resumen de los parámetros utilizados para la búsqueda de URLs de noticias a modo de verificación.}
     \label{tab:news_parameters}
@@ -43,12 +61,11 @@ Es importante resaltar que los parámetros presentados en la tabla \ref{tab:news
                 & Paraguay, Uruguay, Argentina, Chile, España, \\
                 & Estados Unidos, Inglaterra, Escocia, Irlanda, \\
                 & Australia, Irlanda del Norte, Canadá, \\
-                & Nueva Zelanda, Francia, Italia \\
+                & Nueva Zelanda, Francia, Italia, \\
+                & Ciudad del Vaticano \\
         Palabras Clave & virus, COVID, coronavirus, pandemia, \\
                 & cuarentena, vacunas \\
     \end{tabular}
     \caption{Nuevos parámetros utilizados para la búsqueda de URLs de noticias.}
     \label{tab:news_final_parameters}
 \end{table}
-
-
