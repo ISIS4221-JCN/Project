@@ -1,4 +1,4 @@
 *.zip
 data/*
 .ipynb_checkpoints*
-
+*.npy
