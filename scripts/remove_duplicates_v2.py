@@ -3,7 +3,7 @@ from tqdm import tqdm
 
 def remove_duplicates(args):
     docs = sorted(os.listdir(args.path + args.lang))
-    print('Found {} documents...\n'.format(len(docs)))
+    print('Found {} documents...'.format(len(docs)))
 
     text = {}
     for doc in tqdm(docs):
@@ -11,8 +11,8 @@ def remove_duplicates(args):
             tweet = json.load(file)
         text[doc] = tweet['text']
 
-    print('Loaded {} documents into directory...\n'.format(len(text)))
-    print('Looking for reapeted files...\n')
+    print('Loaded {} documents...'.format(len(text)))
+    print('Looking for reapeted files...')
     to_remove = []
     for key1 in tqdm(list(text.keys())):
         for key2 in list(text.keys()):
@@ -22,6 +22,7 @@ def remove_duplicates(args):
     to_remove = set(to_remove)
     print('Found {} repeated documents...'.format(len(to_remove)))
 
+    input('Press enter to delete repeated documents')
     counter = 0
     for doc in to_remove:
         os.remove(args.path + args.lang + '/' + doc)

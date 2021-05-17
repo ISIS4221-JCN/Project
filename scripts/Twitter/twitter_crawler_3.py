@@ -134,6 +134,7 @@ def get_stream(headers, path, counter):
                         'author':json_response['includes']['users'][0]['username'],
                         'text': json_response['data']['text']}
             file = open(path+'TWITTER_'+str(counter)+'.json', 'w+')
+            print(file)
             json.dump(tweet_dict, file, indent=4)
             file.close()
             counter += 1
@@ -144,7 +145,7 @@ def main(args):
     Args:
         args (dict): parsed arguments
     """
-    bearer_token = "AAAAAAAAAAAAAAAAAAAAAPFGOQEAAAAAF32M7Ov5GWoxDpDhOobf92ck2uY%3DOuwm0vBS0LBsHNtMACxbZagwRFlOHUqnz6NS1FhgV8D1WdnDcG"
+    bearer_token = "AAAAAAAAAAAAAAAAAAAAAPq0PgEAAAAAeA%2Bv8vJ8h9BMzIHjl6wcywC0bs0%3DNypbEG7nzIOve48FMo3qsteJ6QzB98XjG68dVLxtuXMuJv97cG"
     headers = create_headers(bearer_token)
     rules = get_rules(headers)
     delete = delete_all_rules(headers, rules)

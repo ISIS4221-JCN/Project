@@ -58,7 +58,7 @@ def main(counters, path):
         headers = create_headers(bearer_token)
         json_response = connect_to_endpoint(url, headers)
         for tweet in json_response['data']:
-            if tweet['lang'] in ['es','de','en','it','fr']:     
+            if tweet['lang'] in ['es','de','en','it','fr']:
                 counter = counters[tweet['lang']]
                 lang = tweet_parser(tweet, counter, path)
                 counters[lang] += 1
@@ -66,11 +66,11 @@ def main(counters, path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--counter_en', type=int, default=0)
-    parser.add_argument('--counter_fr', type=int, default=0)
-    parser.add_argument('--counter_es', type=int, default=0)
-    parser.add_argument('--counter_it', type=int, default=0)
-    parser.add_argument('--counter_de', type=int, default=0)
+    parser.add_argument('--counter_en', type=int, default=1)
+    parser.add_argument('--counter_fr', type=int, default=1)
+    parser.add_argument('--counter_es', type=int, default=1)
+    parser.add_argument('--counter_it', type=int, default=1)
+    parser.add_argument('--counter_de', type=int, default=1)
     parser.add_argument('--save_file', type=str, default='/media/juan/Juan/NLP/')
     args = parser.parse_args()
     counters = {'en': args.counter_en, 'fr': args.counter_fr,

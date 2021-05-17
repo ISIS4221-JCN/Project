@@ -134,6 +134,7 @@ def get_stream(headers, path, counter):
                         'author':json_response['includes']['users'][0]['username'],
                         'text': json_response['data']['text']}
             file = open(path+'TWITTER_'+str(counter)+'.json', 'w+')
+            print(file)
             json.dump(tweet_dict, file, indent=4)
             file.close()
             counter += 1
