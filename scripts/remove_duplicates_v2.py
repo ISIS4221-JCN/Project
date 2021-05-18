@@ -22,12 +22,11 @@ def remove_duplicates(args):
     to_remove = set(to_remove)
     print('Found {} repeated documents...'.format(len(to_remove)))
 
-    input('Press enter to delete repeated documents')
     counter = 0
     for doc in to_remove:
         os.remove(args.path + args.lang + '/' + doc)
         counter += 1
-    print('Removed {} documents...\n'.format(counter))
+    print('Removed {} documents...'.format(counter))
 
     remaining_docs = len(os.listdir(args.path + args.lang))
 
