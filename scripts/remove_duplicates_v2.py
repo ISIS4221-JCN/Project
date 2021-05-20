@@ -23,7 +23,7 @@ def remove_duplicates(args):
     print('Found {} repeated documents...'.format(len(to_remove)))
 
     counter = 0
-    for doc in to_remove:
+    for doc in tqdm(to_remove):
         os.remove(args.path + args.lang + '/' + doc)
         counter += 1
     print('Removed {} documents...'.format(counter))
