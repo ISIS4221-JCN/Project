@@ -8,9 +8,6 @@ import concurrent.futures
 class Utils:
     def __init__(self, path_prefix, num_workers = 15):
         self.path_prefix = path_prefix
-        self.tokenizer = nltk.RegexpTokenizer(r'\w+')
-        self.porter_stemmer = PorterStemmer()
-        self.lemmatizer = nltk.stem.WordNetLemmatizer()
         self.num_workers = num_workers
 
     def data_loader(self, lang, source, total_data=None):
@@ -57,7 +54,8 @@ class Utils:
                             remove_stop_words = False,
                             stemming = False,
                             tonekize = False,
-                            lemmatize = False):
+                            lemmatize = False,
+                            tweet_tokenizer = False):
         """ Function to apply preprocessing steps to text
 
         Args:
@@ -67,10 +65,20 @@ class Utils:
             stemming (bool): True to apply stemming
             tokenize (bool): True to tokenize text
             lemmatize (bool): True to lemmatize
+            tweet_tokenizer (bool): True to use nltk tweet tokenizer
 
         Returns:
             str: Preprocessed string
         """
+
+        if tweet_tokenizer:
+            tokenizer = TweetTokenizer(preserve_case=False, reduce_len=True, strip_handles=True)
+        else:
+            tokenizer = nltk.RegexpTokenizer(r'\w+')
+
+        porter_stemmer = PorterStemmer()
+        lemmatizer = nltk.stem.WordNetLemmatizer()
+
         # Converts to lowercase
         text = text.lower()
 
@@ -86,11 +94,11 @@ class Utils:
 
         # Stems text
         if stemming:
-            text = self.porter_stemmer.stem_sentence(text)
+            text = porter_stemmer.stem_sentence(text)
 
         # Tokenizes text and removes punctuation
         if tokenize:
-            text = self.tokenizer.tokenize(text)
+            text = tokenizer.tokenize(text)
 
         # Lemmatizes text
         if lemmatize:
