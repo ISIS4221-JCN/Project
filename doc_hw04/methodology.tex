@@ -1,4 +1,6 @@
 
+En la figura \ref{fig:TopicDetectionDiag} se presenta la metodología propuesta para resolver la tarea de detección de tópicos a través de una representación de palabras con modelos profundos y técnicas de \textit{clustering}. Esta metodología se inspiro principalmente en el trabajo presentados en \cite{DeepRepresentationClusteringTweets}, en donde no solo se utiliza el modelo BERT para hacer la representación de las palabras sino que esto combina con un \textit{autoencoder} para reducir la dimensionalidad de las representaciones. No obstante, dadas las limitaciones de computación y de tiempo, no se utilizaron las representaciones de todas las palabras, ni un autoencoder basado en redes convolucionales 2D, sino que se implementó una aproximación más sencilla del mismo modelo, la cual se explica más adelante en esta sección. Asimismo, para poder hacer una descripción de los tópicos (resultado de las agrupaciones hechas por el algoritmo de \textit{clustering}), se tomaron ideas de \cite{TrendTopicsDetectionFromTwitter}, al buscar las palabras claves de cada \textit{cluster} y representarlas en una nube de palabras. Finalmente, se hizo un análisis de estos resultados a nivel de las agrupaciones obtenidas y el comportamiento a lo largo del tiempo, lo cual permitió ajustar los parámetros de cada una de las distintas etapas de procesamiento y obtener resultados presentados.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{doc_hw04/images/TopicDetectionDiag.png}
@@ -6,8 +8,8 @@
     \label{fig:TopicDetectionDiag}
 \end{figure}
 
-El \textit{dataset} utilizado para detección de temas en tendencia corresponde documentos recogidos por los autores de dos fuentes diferentes \textit{Twitter} y \textit{Reddit} en inglés, español y francés. Por cuestión de tiempo de procesamiento se decidió excluir las noticias recopiladas. Si bien se tiene una gran cantidad de datos en inglés (más de 800.00 documentos) se decide utilizar únicamente alrededor de 135.000 datos con el fin de impedir que la cantidad de documentos favoreciera un idioma por encima de otro, y poder analizar con mayor imparcialidad. El total de documentos utilizados en cada caso se muestra en la tabla \ref{tab:docs}.
 \subsection{Dataset}
+El \textit{dataset} utilizado para detección de temas en tendencia corresponde documentos recogidos por los autores de dos fuentes diferentes \textit{Twitter} y \textit{Reddit} en inglés, español y francés. Por cuestión de tiempo de procesamiento se decidió excluir las noticias recopiladas. Si bien se tiene una gran cantidad de datos en inglés (más de 800.00 documentos) se decide utilizar únicamente alrededor de 135.000 datos con el fin de impedir que la cantidad de documentos favoreciera un idioma por encima de otro, y poder analizar con mayor imparcialidad. El total de documentos utilizados en cada caso se muestra en la tabla \ref{tab:docs}.
 
 \begin{table}[H]
 \centering
@@ -59,6 +61,14 @@ El preprocesamiento de los datos se realizó siguiendo los siguientes pasos:
     \end{itemize}
 \end{itemize}
 
-
 \subsection{Extracción de características}
+
+Una vez preprocesados los datos se procedió a extraer las características (\textit{o features}) de cada una de las sentencias utilizando un modelo profundo pre-entrenado. Para este trabajo se utilizaron en total 3 versiones de BERT-base pre-entrenadas, una para cada idioma: El modelo 
+bertweet-covid19-base-uncased \cite{bertweet} (reentrenado sobre un corpus de 850M de tweets relacionados con las tematicas de covid-19), el modelo de BETO o Spanish BERT \cite{CaneteCFP2020} (reentrenado para idioma español) y finalmente el modelo bert-base-french-europeana-cased (reentrenado para idioma framces). Adicionalmente, se hicieron pruebas sobre el modelo covid-twitter-bert-v2 \cite{muller2020covid}, no obstante, al estar este basado en el BERT-Large, el tiempo de computo era considerablemente mayor por lo que fue necesario descartar dicha opción. \\
+
+Ahora bien, 
+
+
 \subsection{\textit{Clustering}}
+
+
