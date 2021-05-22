@@ -1,7 +1,15 @@
-\subsection{Dataset}
-El \textit{dataset} utilizado para detección de temas en tendencia corresponde documentos recogidos por los autores de dos fuentes diferentes \textit{Twitter} y \textit{Reddit} en inglés, español y francés. Por cuestión de tiempo de procesamiento se decidió excluir las noticias recopiladas. Si bien se tiene una gran cantidad de datos en inglés (más de 800.00 documentos) se decide utilizar únicamente alrededor de 135.000 datos con el fin de impedir que la cantidad de documentos favoreciera un idioma por encima de otro, y poder analizar con mayor imparcialidad. El total de documentos utilizados en cada caso se muestra en la tabla \ref{tab:docs}
 
-\begin{table}[]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{doc_hw04/images/TopicDetectionDiag.png}
+    \caption{Metodología propuesta para la detección de tópicos utilizando \textit{deep sentence representation} y \textit{clustering}.}
+    \label{fig:TopicDetectionDiag}
+\end{figure}
+
+El \textit{dataset} utilizado para detección de temas en tendencia corresponde documentos recogidos por los autores de dos fuentes diferentes \textit{Twitter} y \textit{Reddit} en inglés, español y francés. Por cuestión de tiempo de procesamiento se decidió excluir las noticias recopiladas. Si bien se tiene una gran cantidad de datos en inglés (más de 800.00 documentos) se decide utilizar únicamente alrededor de 135.000 datos con el fin de impedir que la cantidad de documentos favoreciera un idioma por encima de otro, y poder analizar con mayor imparcialidad. El total de documentos utilizados en cada caso se muestra en la tabla \ref{tab:docs}.
+\subsection{Dataset}
+
+\begin{table}[H]
 \centering
 \caption{Total de documentos utilizados por idioma}
 \label{tab:docs}
@@ -21,7 +29,7 @@ El preprocesamiento de los datos se realizó siguiendo los siguientes pasos:
     \item Pasar todas las palabras a minúsculas.
     \item Eliminar signos de puntuación y caracteres especiales.
     \item Tokenizar las palabras.
-    \item Lemmatizar las palabras.
+    \item Lematizar las palabras.
 \end{enumerate}
 
 \begin{itemize}
