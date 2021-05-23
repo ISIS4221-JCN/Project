@@ -161,9 +161,7 @@ En los últimos dos \textit{clusters} se evidencia casi de inmediato una palabra
 \end{figure}
 
 \subsection{Francés}
-Para seleccionar el número de \textit{clusters} a tener en cuenta se obtuvieron las gráficas de la distribución utilizando dos, tres, cuatro y cinco grupos (\textit{véase fig \ref{fig:fr_kmeans}}).
-
-La separación de los primeros tres valores (2, 3, y 4) es relativamente clara y se pueden distinguir los colores de cada uno de los grupos. Sin embargo, la distribución obtenida con cinco no permite distinguir claramente el color del quinto \textit{cluster} (\textit{véase fig \ref{fig:es_kmeans_5}}). Por otra parte, si bien es cierto que la separación para dos y tres grupos (\textit{véase fig \ref{fig:es_kmeans_2} y \ref{fig:es_kmeans_3}}) es muy clara y se ve bien distribuida, las tendencias de palabras principales y tiempo no permitían hacer un análisis claro; razón por la cual se decidió trabajar con cuatro grupos.\\
+Para seleccionar el número de \textit{clusters} a tener en cuenta se obtuvieron las gráficas de la distribución utilizando dos, tres, cuatro y cinco grupos (\textit{véase fig \ref{fig:fr_kmeans}}). La separación de los primeros dos valores (2 y 3) es clara, lo cual consiste en que se pueden distinguir las diferentes agrupaciones de cada uno de los grupos. Sin embargo, la distribución obtenida con cuatro y cinco grupos no permite distinguir claramente los colores de cada \textit{cluster} (\textit{véase figuras  \ref{fig:fr_kmeans_4} y \ref{fig:fr_kmeans_5}}). Aunque la separación al considerar dos grupos es evidente, se procede a trabajar con tres grupos con el fin de tener más información disponible para realizar el análisis.
 
 \begin{figure}
      \centering
@@ -194,6 +192,36 @@ La separación de los primeros tres valores (2, 3, y 4) es relativamente clara y
          \caption{5 clusters}
          \label{fig:fr_kmeans_5}
      \end{subfigure}
-        \caption{Resultados de K-means con diferente número de clusters para el idioma Francés}
+        \caption{Resultados de K-means con diferente número de clusters para el idioma francés.}
         \label{fig:fr_kmeans}
 \end{figure}
+
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/TopicDetection/fr
+        \caption{Cluster 0}
+        \label{fig:es_c0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/TopicDetection/es/cluster1.png}
+        \caption{Cluster 1}
+        \label{fig:es_c1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/TopicDetection/es/cluster2.png}
+        \caption{Cluster 2}
+        \label{fig:es_c2}
+    \end{subfigure}
+    \hfill
+    \caption{Principales palabras de cada uno de los clusters}
+    \label{fig:es_clusters}
+\end{figure}
+
