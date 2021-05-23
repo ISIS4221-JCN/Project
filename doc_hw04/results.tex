@@ -1,6 +1,8 @@
-A continuación, se describen los resultados obtenidos del proceso de detección de temas tendencia con base en el procedimiento previamente descrito para cada uno de los idiomas seleccionados.
+A continuación, se describen los resultados obtenidos del proceso de detección de temas tendencia, con base en el procedimiento previamente descrito para cada uno de los idiomas seleccionados.
 
 \subsection{Inglés}
+
+Para seleccionar el número de \textit{clusters} a tener en cuenta se obtuvieron las gráficas de la distribución utilizando dos, tres, cuatro y cinco grupos (\textit{véase fig \ref{fig:en_kmeans}}). Vale la pena aclarar que estas gráficas solo presentan una proyección en dos dimensiones del verdadero espacio de 32 dimensiones y se obtuvieron con un análisis de componentes principales (o PCA por sus siglas en inglés). Para el idioma inglés se obtuvieron clusters separados (al menos a un nivel visual) para hasta 4 clusters. Ya al momento de buscar 5 clusters se empezaron a sobreponer las agrupaciones de datos. No obstante, para la selección del parámetro \textit{K} también se tuvo en cuenta las palabras claves o \textit{keywords} obtenidas. \\
 
 \begin{figure}
      \centering
@@ -31,11 +33,11 @@ A continuación, se describen los resultados obtenidos del proceso de detección
          \caption{5 clusters}
          \label{fig:es_kmeans_5}
      \end{subfigure}
-        \caption{Resultados de K-means con diferente número de \textit{clusters} (inglés)}
+        \caption{Clusters obtenidos con el algoritmo de K-means para diferentes Ks proyectados en un plano 2D utilizando PCA (Inglés)}
         \label{fig:en_kmeans}
 \end{figure}
 
-
+En la figura \ref{fig:en_clusters} se pueden observar las más frecuentes de los documentos más representativos (más cercanos al centro) de cada \textit{cluster}. Con un $K = 3$ se puede evidenciar una clara tendencia en el tipo de clusters obtenidos. En general estos tres \textit{clusters} se pueden asociar a tres momentos temporales distintos que ha vivido la pandemia. Por un lado, en el primer cluster, se pueden observar palabras asociadas a lo que podría ser la aparición del virus con palabras como China y Trump (antiguo presidente de estados unidos) siendo tendencia. Por otro lado, el último cluster hace referencia a palabras que hablan sobre todo el creciente debate acerca de la pandemia, incluyendo el uso o no de tapabocas y de pensar en como manejar la pandemia, ya en este caso aparece la mención a las vacunas. Y, finalmente, en el segundo cluster, se obtienen una mayor presencia de las palabras asociadas a la vacunación  (\textit{vaccine} y \textit{vaccines}), con todavía importancia a palabras relacionadas al uso de tapabocas.
 
 \begin{figure}
     \centering
@@ -59,9 +61,11 @@ A continuación, se describen los resultados obtenidos del proceso de detección
         \caption{Cluster 2}
         \label{fig:en_c1}
     \end{subfigure}
-    \hfill
+    \caption{Palabras más frecuentes en los documentos en el centros de cada uno de los \textit{clusters} (Inglés)}
+    \label{fig:en_clusters}
 \end{figure}
 
+Las agrupaciones de documentos (o tópicos) obtenidos tienen aún más sentido a nivel temporal cuando se analiza su distribución a través del tiempo. En la figura \ref{fig:en_time} se puede observar la distribución de documentos para los distintos meses de la pandemia. Vale la pena aclarar que se hizo una normalización de los documentos asociados a cada \textit{cluster} sobre cada mes. Esto para evitar que el sesgo de la cantidad de datos recuperados en cada fecha influenciará la representación en la gráfica. Así las cosas se observa que los temas relacionados con el primer cluster (virus, china, trump, etc.) han caído en los últimos meses, mientras que los temas asociados con el segundo cluster (vacunas, vacunación, trabajo) han aumentado en los últimos meses. Mientras tanto la discusión acerca de las mascarillas y el pensamiento correcto de manejar la pandemia se ha mantenido relativamente estable.
 
 \begin{figure}
     \centering

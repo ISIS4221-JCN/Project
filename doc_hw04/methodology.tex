@@ -66,9 +66,28 @@ El preprocesamiento de los datos se realizó siguiendo los siguientes pasos:
 Una vez preprocesados los datos se procedió a extraer las características (\textit{o features}) de cada una de las sentencias utilizando un modelo profundo pre-entrenado. Para este trabajo se utilizaron en total 3 versiones de BERT-base pre-entrenadas, una para cada idioma: El modelo 
 bertweet-covid19-base-uncased \cite{bertweet} (reentrenado sobre un corpus de 850M de tweets relacionados con las tematicas de covid-19), el modelo de BETO o Spanish BERT \cite{CaneteCFP2020} (reentrenado para idioma español) y finalmente el modelo bert-base-french-europeana-cased (reentrenado para idioma framces). Adicionalmente, se hicieron pruebas sobre el modelo covid-twitter-bert-v2 \cite{muller2020covid}, no obstante, al estar este basado en el BERT-Large, el tiempo de computo era considerablemente mayor por lo que fue necesario descartar dicha opción. \\
 
-Ahora bien, 
+Ahora bien, de estos modelos es posible obtener varias representaciones a nivel de palabras o de sentencias con base en los distintos tokens que utiliza el modelo (véase figura \ref{fig:BERT_Tokens}). En este caso, se decidió utilizar como representación de la sentencia el token \texttt{CLS}. Este es un token especial utilizado en la tarea de clasificación y que codifica la información de toda la expresión, en este caso todo el documento (tweet,  post o comentario de Reddit). De esta manera, para cada documento se tendrá un vector asociado a su representación de 768 posiciones. 
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{doc_hw04/images/BERT_Tokens.png}
+    \caption{\textit{Tokens} utilizados en el modelo BERT}
+    \label{fig:BERT_Tokens}
+\end{figure}
+
+No obstante, los algoritmos de \textit{clustering} suelen presentar un mejor funcionamiento en espacios de dimensiones reducidas, esto mejora la convergencia pues da una mejor idea del concepto de distancia. Así las cosas y similar a como se presenta en \cite{DeepRepresentationClusteringTweets} se utiliza un autoencoder para reducir la dimensionalidad de las representaciones (véase figura \ref{fig:autoencoder}). El modelo utilizado no es más que una red neuronal que se entrena con los mismos datos a la entrada y a la salida, lo que internamente comprime y descomprime la información. Esto permite obtener una representación, en un espacio latente mucho menor al de la entrada (en este caso se paso de 768 a 32 dimensiones), que contiene suficiente información para reconstruir la misma información en la salida. Así las cosas, es esta información codificada la que se utilizó como entrada al modelo de agrupación o \textit{clustering} para realizar la detección no supervisada de tópicos.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{doc_hw04/images/autoencoder.png}
+    \caption{Arquitectura de un modelo de autoencoder}
+    \label{fig:autoencoder}
+\end{figure}
 
 \subsection{\textit{Clustering}}
 
+Ya a partir de las representaciones en un espacio de dimensiones reducido se procede a hacer la agrupación de los documentos para obtener grupos de tópicos relevantes. En este caso se realizaron pruebas con los algoritmos de \textit{Spectral Clustering}, \textit{Agglomerative Custering} y \textit{K-Means}. Sin embargo, a partir de los resultados presentados en \cite{DeepRepresentationClusteringTweets} y la posibilidad de recuperar los documentos más cercanos al centro del \textit{cluster} se decidió utilizar únicamente el algoritmo de \textit{K-Means}. De forma general, este algoritmo genera un número K de centroides aleatorios que agrupan los puntos (en este caso las representaciones de los documentos) más cercanos y los asocia a un \textit{cluster}. Posteriormente, y de forma iterativa, estos centroides se recalculan como la media de los puntos (o documentos) que agrupa el \textit{cluster} y vuelve a definir los \textit{clusters}. Vale la pena aclarar que un parámetro importante a ajustar en este algoritmo es el \textit{K} o el número de \textit{clusters}. Para esto se realizaron pruebas con distinto número de K y se evidencio la descripción (o \textit{keywords}) asociada a cada tópico para tomar esta decisión.
 
+\subsection{\textit{Keywords Extraction}}
+
+Finalmente, para poder describir el tópico (la agrupación o \textit{cluster} de documentos), se procedió a extraer las palabras que lo describen. Estos dan una idea de donde están concentrados los documentos más representativos del \textit{cluster}. De esta manera, se recuperó un número \textit{N} de documentos "relevantes", que son aquellos que se encuentran más cerca al centro del \textit{cluster}. Y, posteriormente, se extrajeron de esos documentos aquellos términos (o tokens) con mayor frecuencia dentro de esos documentos. Por último estos tópicos se presentan en el formato de \textit{wordcloud} para poder hacer más fácil su análisis.
