@@ -161,3 +161,39 @@ En los últimos dos \textit{clusters} se evidencia casi de inmediato una palabra
 \end{figure}
 
 \subsection{Francés}
+Para seleccionar el número de \textit{clusters} a tener en cuenta se obtuvieron las gráficas de la distribución utilizando dos, tres, cuatro y cinco grupos (\textit{véase fig \ref{fig:fr_kmeans}}).
+
+La separación de los primeros tres valores (2, 3, y 4) es relativamente clara y se pueden distinguir los colores de cada uno de los grupos. Sin embargo, la distribución obtenida con cinco no permite distinguir claramente el color del quinto \textit{cluster} (\textit{véase fig \ref{fig:es_kmeans_5}}). Por otra parte, si bien es cierto que la separación para dos y tres grupos (\textit{véase fig \ref{fig:es_kmeans_2} y \ref{fig:es_kmeans_3}}) es muy clara y se ve bien distribuida, las tendencias de palabras principales y tiempo no permitían hacer un análisis claro; razón por la cual se decidió trabajar con cuatro grupos.\\
+
+\begin{figure}
+     \centering
+     \begin{subfigure}[b]{0.4\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{results/TopicDetection/fr/PCA_2.png}
+         \caption{2 clusters}
+         \label{fig:fr_kmeans_2}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.4\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{results/TopicDetection/fr/PCA_3.png}
+         \caption{3 clusters}
+         \label{fig:fr_kmeans_3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.4\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{results/TopicDetection/fr/PCA_4.png}
+         \caption{4 clusters}
+         \label{fig:fr_kmeans_4}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.4\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{results/TopicDetection/fr/PCA_5.png}
+         \caption{5 clusters}
+         \label{fig:fr_kmeans_5}
+     \end{subfigure}
+        \caption{Resultados de K-means con diferente número de clusters para el idioma Francés}
+        \label{fig:fr_kmeans}
+\end{figure}
