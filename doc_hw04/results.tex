@@ -161,3 +161,76 @@ En los últimos dos \textit{clusters} se evidencia casi de inmediato una palabra
 \end{figure}
 
 \subsection{Francés}
+Para seleccionar el número de \textit{clusters} a tener en cuenta se obtuvieron las gráficas de la distribución utilizando dos, tres, cuatro y cinco grupos (\textit{véase fig \ref{fig:fr_kmeans}}). La separación de los primeros dos valores (2 y 3) es clara, lo cual consiste en que se pueden distinguir las diferentes agrupaciones de cada uno de los grupos. Sin embargo, la distribución obtenida con cuatro y cinco grupos no permite distinguir claramente los colores de cada \textit{cluster} (\textit{véase figuras  \ref{fig:fr_kmeans_4} y \ref{fig:fr_kmeans_5}}). Aunque la separación al considerar dos grupos es evidente, se procede a trabajar con tres grupos con el fin de tener más información disponible para realizar el análisis.
+
+\begin{figure}
+     \centering
+     \begin{subfigure}[b]{0.4\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{results/TopicDetection/fr/PCA_2.png}
+         \caption{2 clusters}
+         \label{fig:fr_kmeans_2}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.4\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{results/TopicDetection/fr/PCA_3.png}
+         \caption{3 clusters}
+         \label{fig:fr_kmeans_3}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.4\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{results/TopicDetection/fr/PCA_4.png}
+         \caption{4 clusters}
+         \label{fig:fr_kmeans_4}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.4\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{results/TopicDetection/fr/PCA_5.png}
+         \caption{5 clusters}
+         \label{fig:fr_kmeans_5}
+     \end{subfigure}
+        \caption{Resultados de K-means con diferente número de clusters para el idioma francés.}
+        \label{fig:fr_kmeans}
+\end{figure}
+
+La figura \ref{fig:fr_clusters} introduce las palabras con mayor frecuencia de los tres \textit{clusters} considerados. El primer \textit{cluster} (0) presenta algunas palabras relevantes al inicio de la pandemia como lo son \textit{confinement}, \textit{vaccin} y \textit{monde} entre otras. El segundo \textit{cluster} (1) introduce otro conjunto de palabras relevantes como \textit{deconfinement}, \textit{vaccin}, \textit{pandemie} y \textit{masque}. Finalmente, el tercer \textit{cluster} (2) presenta palabras como \textit{variant} y \textit{vaccin}. 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/TopicDetection/fr/cluster3_0.png}
+        \caption{Cluster 0}
+        \label{fig:fr_c0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/TopicDetection/fr/cluster3_1.png}
+        \caption{Cluster 1}
+        \label{fig:fr_c1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/TopicDetection/fr/cluster3_2.png}
+        \caption{Cluster 2}
+        \label{fig:fr_c2}
+    \end{subfigure}
+    \hfill
+    \caption{Principales palabras de cada uno de los clusters para el idioma francés.}
+    \label{fig:fr_clusters}
+\end{figure}
+
+La figura \ref{fig:fr_time} presenta la distribución de los grupos de palabras a través del tiempo. Si bien hay una distinción entre los conjuntos y su temporalidad, esta no es tan clara como se ha logrado identificar en los otros idiomas. No obstante, algunos grupos con palabras únicas presentan repuntes que se pueden relacionar con los temas de interés del momento. Por ejemplo, el tercer \textit{cluster} (2) presenta un repunte en el mes de febrero de 2021, época en la cual la variante india fue identificada. Otro aspecto que se puede identificar es el repunte del grupo (1) en el mes de marzo de 2020. Un término de dicho grupo es \textit{pandemie} que tuvo popularidad cuando la OMS declaró la pandemia de COVID-19 el 11 de marzo de 2020.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{results/TopicDetection/fr/cluster_over_time_3.png}
+    \caption{Comportamiento de los clusters en el tiempo}
+    \label{fig:fr_time}
+\end{figure}
+

@@ -1,0 +1,125 @@
+\documentclass[12pt]{article}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{vmargin}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+      *{:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+\setmarginsrb{3 cm}{2.5 cm}{3 cm}{2.5 cm}{1 cm}{1.5 cm}{1 cm}{1.5 cm}
+
+\title{Tarea - 04}
+\date{\today}
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\theauthor}
+\lhead{\thetitle}
+\cfoot{\thepage}
+
+\addto\captionsspanish{
+  \renewcommand{\contentsname}%
+    {Tabla de contenido}%
+}
+
+\begin{document}
+    \pagestyle{fancy}
+    \fancyhf{}
+
+    \lhead{\begin{picture}(0,0) \put(0,0){\includegraphics[width=30mm]{images/Logo2.png}} \end{picture}}
+    \renewcommand{\headrulewidth}{0.7pt}
+    \fancyhead[R]{Detección de temas en tendencia}
+\fancyfoot[R]{\thepage}
+
+\begin{titlepage}
+	\centering
+    \includegraphics[scale = 0.45]{images/Logo.png}\\[0.5 cm]	% University Logo
+    \textsc{\large Universidad de los Andes\\
+        \vspace{0.2cm} 
+        Facultad de Ingeniería\\
+        \vspace{0.3cm} 
+        Proyecto final}\\[2.0 cm]	% University Name
+	\textsc{\Large Procesamiento de lenguaje natural}\\[0.5 cm]
+	% Course Code
+	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
+	{ \LARGE \bfseries \thetitle}\\
+	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
+	
+	\large
+			\emph{Presentado por:} \\
+			Juan David García Hernández\\
+			Nicolás Rocha Pacheco\\
+			César Daniel Garrido Urbano\\
+			
+	\vfill
+	\large
+			\emph{Presentado a:}\\
+			Rubén Francisco Manrique Pirmanrique\\
+\end{titlepage}
+
+\thispagestyle{empty}
+\tableofcontents
+\pagebreak
+
+\setcounter{page}{1}
+\section{Introducción}
+\input{doc_hw04/intro}
+\newpage
+
+\section{Revisión bibliográfica}
+\input{doc_hw04/related_work}
+
+\section{Metodología y procedimiento}
+\input{doc_hw04/methodology}
+
+\section{Resultados}
+\input{doc_hw04/results}
+
+\section{Conclusiones}
+\input{doc_hw04/conclusions}
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{biblist.bib}
+
+\end{document}
