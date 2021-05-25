@@ -9,7 +9,7 @@ import datetime
 
 
 class Utils:
-    def __init__(self, path_prefix, num_workers = 15):
+    def __init__(self, path_prefix, num_workers = 10):
         self.path_prefix = path_prefix
         self.num_workers = num_workers
         self.tweet_tokenizer = TweetTokenizer(preserve_case=False,
