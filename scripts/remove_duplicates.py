@@ -35,7 +35,7 @@ def remove_duplicates(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--path', type=str, default='/media/juan/Juan/NLP/')
-    parser.add_argument('--source', type=str, default = 'Tweets')
+    parser.add_argument('--source', type=str, default = 'tweets')
     parser.add_argument('--lang', type=str, default='es')
     args = parser.parse_args()
     args.path = args.path + args.source + '/'
