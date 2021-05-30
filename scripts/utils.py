@@ -50,12 +50,15 @@ class Utils:
                 with open(os.path.join(path, file), 'r+') as file_str:
                     data_dict = json.load(file_str)
                     text = data_dict['text']
-                    if len(text.split(' ')) < max_size:
+                    if max_size:
+                        if len(text.split(' ')) < max_size:
+                            data.append(data_dict['text'])
+                    else:
                         data.append(data_dict['text'])
-                        if return_dates:
-                            date = data_dict['date']
-                            parsed_date = self.date_parser[source](date)
-                            dates.append(parsed_date)
+                    if return_dates:
+                        date = data_dict['date']
+                        parsed_date = self.date_parser[source](date)
+                        dates.append(parsed_date)
             return data, dates
 
         path = os.path.join(self.path_prefix, source, lang)
@@ -102,13 +105,12 @@ class Utils:
         if stemmer:
             text = stemmer.stem(text)
 
-        # # Converts to lowercase
-        text = "".join([char.lower() for char in text if char not in string.punctuation])
-
         # Removes stopwords
         if tokenizer:
             text = tokenizer.tokenize(text)
 
+        # Converts to lowercase
+        text = "".join([char.lower() for char in text if char not in string.punctuation])
 
         # Lemmatizes text
         relevant_words=[]
