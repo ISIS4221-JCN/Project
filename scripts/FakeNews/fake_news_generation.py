@@ -12,7 +12,7 @@ model_dict = {'en': 'gpt2',
 def main(args):
     device = torch.device("cuda")
     print(device)
-    generator = pipeline('text-generation', model=model_dict[args.lang],device=0)
+    generator = pipeline('text-generation', model=model_dict[args.lang],device=0,framework='pt')
     set_seed(args.seed)
     if not args.backwards:
         counter = len(os.listdir(os.path.join(args.path, 'FakeNews', args.lang)))
