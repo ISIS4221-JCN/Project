@@ -33,9 +33,14 @@ class Utils:
 
         Args:
             lang (str): Language to load tweets in [en, es, fr]
+            source (str): Source of files to load ['reddit', 'tweets', 'news']
+            total_data (int): Total files to load
+            max_size (int): Max length of loaded file's string
+            return_dates (bool): Return dates or don't
 
         Returns:
-            list: tweets list
+            list: text list
+            list: dates
         """
         start = time.time()
         def chunk_loader(path, files_list, return_dates):
@@ -60,10 +65,9 @@ class Utils:
         else:
             total_data = len(files_list)
         lists = np.array_split(files_list, self.num_workers)
-
         data = []
         dates = []
-        print("Starting threads to load {} documents from {} in {}".format(total_data, source, lang))
+        print("Starting {} threads to load {} documents from {} in {}".format(self.num_workers, total_data, source, lang))
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = []
             for files_list in lists:
@@ -115,3 +119,42 @@ class Utils:
         text = relevant_words
         # Returns preprocessed text
         return text
+
+    def tagged_data_loader(self, file_names, source, lang):
+        """ Returns text of specified file names
+
+        Args:
+            file_names (list): Name of files to be loaded
+            source (str): Source to look for the files
+            lang (str): Language in which the names will be loaded
+
+        Returns:
+            list: tweets list
+        """
+        start = time.time()
+        def chunk_loader(path, files_list):
+            data = []
+            names = []
+            for file in files_list:
+                with open(os.path.join(path, file), 'r+') as file_str:
+                    names.append(file)
+                    data_dict = json.load(file_str)
+                    text = data_dict['text']
+                    data.append(data_dict['text'])
+            return data, names
+
+        lists = np.array_split(file_names, self.num_workers)
+        path = os.path.join(self.path_prefix, source, lang)
+        data = []
+        names = []
+        print("Starting {} threads to load {} documents from {} in {}".format(self.num_workers, len(file_names), source, lang))
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = []
+            for files_list in lists:
+                futures.append(executor.submit(chunk_loader, path, files_list))
+            for future in concurrent.futures.as_completed(futures):
+                data = data + future.result()[0]
+                names = names + future.result()[1]
+        elapsed_time = time.time() - start
+        print("Loaded {} files in {:.2f} seconds.".format(len(data), elapsed_time))
+        return data, names
