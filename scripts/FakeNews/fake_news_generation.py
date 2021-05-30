@@ -5,7 +5,6 @@ from transformers import pipeline, set_seed
 import zipfile
 import torch
 
-
 model_dict = {'en': 'gpt2',
               'es': 'datificate/gpt2-small-spanish',
               'fr': 'dbddv01/gpt2-french-small'}
@@ -15,8 +14,12 @@ def main(args):
     print(device)
     generator = pipeline('text-generation', model=model_dict[args.lang],device=0)
     set_seed(args.seed)
-    counter = len(os.listdir(os.path.join(args.path, 'FakeNews', args.lang)))
-    real_news_names = sorted(os.listdir(os.path.join(args.path, 'news' , args.lang + '/')))[counter:]
+    if not args.backwards:
+        counter = len(os.listdir(os.path.join(args.path, 'FakeNews', args.lang)))
+        real_news_names = sorted(os.listdir(os.path.join(args.path, 'news' , args.lang + '/')))[counter:]
+    else:
+        counter = len(os.listdir(os.path.join(args.path, 'news', args.lang)))
+        real_news_names = sorted(os.listdir(os.path.join(args.path, 'news' , args.lang + '/')))
     for file in tqdm(real_news_names):
         with open(os.path.join(args.path, 'news' , args.lang, file), encoding='utf-8') as opened_file:
             news = json.load(opened_file)
@@ -36,7 +39,7 @@ def main(args):
             file = open(os.path.join(args.path, 'FakeNews', args.lang, 'fake_' + str(counter) + '.json'), 'w+', encoding='utf-8')
             json.dump(fake_news_dict, file, indent=4)
             file.close()
-            counter += 1
+            counter -= 1
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -45,5 +48,6 @@ if __name__ == '__main__':
     parser.add_argument('--lang', type=str, default='es')
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--max_length', type=int, default=300)
+    parser.add_argument('--backwards', type=bool, default=False)
     args = parser.parse_args()
     main(args)
