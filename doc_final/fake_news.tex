@@ -8,10 +8,47 @@ Actualmente, hay algunos \textit{datasets} diseñados para entrenar modelos para
 A continuación, se describen a detalle diferentes etapas del proceso de solución al problema de detección de noticias falsas.
 
 \subsection{Revisión del estado del arte}
+Actualmente, de acuerdo con \cite{PapersWithCodeBenchmark} existen cuatro tareas famosas en detección de noticias falsas:
+\begin{enumerate}
+    \item \textit{FNC-1 Stance Detection:} Fue el más utilizado hasta hace tres años. Consiste en detectar la postura de un documento con respecto a una afirmación del usuario.
+    \item \textit{Grover Mega} \cite{grover}\textit{:} Es un proyecto de la universidad de Washington en que se trabaja con todos los temas relacionados con Fake News, desde generación hasta detección.
+    \item \textit{Fake news and hostility detection:} Tarea propuesta recientemente, pero con poca participación debido a que el \textit{dataset} esta en árabe.
+    \item \textit{Fake News Detection on COVID19 related dataset:} Detección de noticias falsas relacionas con COVID19. El \textit{dataset} consiste en una recopilación de \textit{tweets} de cuentas oficiales de noticias y de otras con fama de divulgar noticias falsas.
+\end{enumerate}
 
+Teniendo en cuenta los objetivos del proyecto se le da mayor importancia a la última tarea y al estado del arte relacionado con la misma, el cual se divide en dos grandes grupos dependiendo del acercamiento que da cada artículo al problema.
+
+\subsubsection{Técnicas de clasificación:}
+Los artículos de este grupo se enfocan en aplicar diferentes algoritmos de clasificación, utilizando como base técnicas tradicionales de extracción de características \cite{List2, List1, Constraint, List3, List4, FightingInfodemic}. En su gran mayoría utilizan \textit{embeddings} como Doc2Vec como extractor de características, sin descartar en algunos casos la utilización de TF-IDF. En cuanto a qué técnicas de \textit{Machine Learning} se utilizan, se rescatan SVM, Naïve Bayes, Logistic Regression, redes neuronales, entre otros.\\
+
+En cada uno de los artículos previamente referenciados puede verse una comparación de los resultados obtenidos con los diferentes modelos y en algunos casos con diferentes técnicas de extracción de características. Los mejores resultados tomando como punto de comparación la métrica F1-score los obtiene una red neuronal implementada en \textit{TensforFlow} con un puntaje de 0,94. El modelo que mejor resultado alcanza sin tener en cuenta redes neuronales es un SMV con 0,9381. 
+
+\subsubsection{Técnicas de extracción de características:}
+El segundo grupo de artículos corresponde a investigaciones mucho más profundas en un único método completo, desde preprocesamiento del \textit{dataset} pasando por el proceso de extracción de características, donde más énfasis y, finalmente, diseño, implementación y evaluación del modelo de clasificación.\\ A continuación, se detalla el proceso seguido por algunos documentos que presentan excelentes resultados:
+
+\begin{itemize}
+    \item \cite{XLNetCovid} propone la utilización de un clasificador sencillo compuesto únicamente por dos capas densas (\textit{fully connected}. La principal contribución es la propuesta de utilizar LDA (\textit{Latent Dirichlet Allocation)} y XL-Net (una red del estado del arte) para extraer características de cada uno de los textos. Los resultados de este artículo alcanzan 0.967 F1-score.
+        
+    \item \cite{Heuristic} utiliza un ensamblaje de redes del estado del arte, especialmente variaciones de BERT(CT-BERT, RoBERT, BERT, etc.) para hacer la clasificación de cada texto. Finalmente, realiza un proceso de votación con ponderación de probabilidades o con conteo de respuestas positivas o negativas de las diferentes redes. El resultado de F1-score es 0.9813.
+        
+    \item \cite{TranformerBasedFineTuning} propone un acercamiento en el que se tengan en cuenta frases profesionales específicas del dominio que se está trabajando, posteriormente utilizar un entrenamiento con una función \textit{softmax} con temperatura incrementada. Después de ello, se utiliza entrenamiento adversarial en que se agrega ruido bajo una función específica para intentar engañar a la red, y con ello darle mayor robustez. Finalmente, utilizan un ensamblaje de diferentes modelos de BERT para extraer las características de cada texto. Estas características son la entrada de un clasificador pequeño y sencillo cuyo resultado es de 0.9901 F1-score.
+\end{itemize}
 
 \subsection{Generación de datos sintéticos}
+Como se mencionó en la descripción del problema, en el caso específico del proyecto se desea enfocar el trabajo a la detección de FakeNews específicamente cuando se trata de noticias falsas generadas por redes profundas del estado del arte, GPT2 específicamente. A continuación, se presenta el paso a paso del proceso de generación de noticias falsas.\\
+
+En primer lugar, se decidió hacer uso de la librería Transformers especialmente por su facilidad para crear un \textit{pipeline} que permita generar texto. Para ello únicamente se debe especificar el modelo que se desea utilizar el cual viene preentrenado para la tarea de generación de texto. En este caso se seleccionaron modelos específicamente para cada idioma según la oferta en la página web de la librería. Posteriormente, se debe proveer una oración inicial sobre la que se basará el modelo para generar texto. Este contexto se creo tomando como base el título y las primeras oraciones de algunas de las noticias reales recopiladas en la primera etapa del proyecto. \\
+
+Se preparó entonces un script que genera una noticia falsa para cada uno de los archivos indicados, y con un modelo seleccionado dependiendo del idioma a trabajar. A pesar de que la generación se realizó utilizando GPU, el proceso fue bastante demorado (+/- 5 segundos por iteración), razón por la cual se generaron un número menor de noticias falsas.
+
 \subsection{Extracción de características}
+
+
 \subsection{Modelos de clasificación}
+
+
 \subsection{Resultados}
+
+
 \subsection{Conclusiones}
+
