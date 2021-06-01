@@ -4,27 +4,24 @@ from datetime import date
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
+import json
+
+count = 0
+lang = 'fr'
 
 class CovidScraper(scrapy.Spider):
     name = "CDC_Scraper"
-    start_urls = ["https://www.cdc.gov/coronavirus/2019-ncov/faq.html"]
+    if lang == 'en':
+        start_urls = ["https://www.cdc.gov/coronavirus/2019-ncov/faq.html"]
+    elif lang == 'es':
+        start_urls = ["https://espanol.cdc.gov/coronavirus/2019-ncov/faq.html"]
+    elif lang == 'fr':
+        start_urls = ["https://www.cdc.gov/coronavirus/2019-ncov/hcp/non-us-settings/overview/index-fr.html"]
 
     def parse(self, response):
-        columns = {
-            "question": [],
-            "answer": [],
-            "answer_html": [],
-            "link": [],
-            "name": [],
-            "source": [],
-            "category": [],
-            "country": [],
-            "region": [],
-            "city": [],
-            "lang": [],
-            "last_update": [],
-        }
+        global count, lang
 
+        today = date.today()
         current_category = ""
 
         all_nodes = response.xpath("//*")
@@ -48,27 +45,24 @@ class CovidScraper(scrapy.Spider):
                     current_answer_html = " ".join(current_answer_html).strip()
 
                     # add question-answer-pair to data dictionary
-                    columns["question"].append(current_question)
-                    columns["answer"].append(current_answer)
-                    columns["answer_html"].append(current_answer_html)
-                    columns["category"].append(current_category)
+                    doc = {}
+                    doc["title"] = current_question
+                    doc["text"] = current_answer
+                    doc["category"] = current_category
+                    doc["link"] = ["https://www.cdc.gov/coronavirus/2019-ncov/faq.html"]
+                    doc["source"] = ["Center for Disease Control and Prevention (CDC)"]
+                    doc["lang"] = [lang]
+                    doc["last_update"] = [today.strftime("%Y/%m/%d")]
+
+                    with open(f'{lang}/CDC_{count}.json', 'w') as fp:
+                        json.dump(doc, fp, sort_keys=True, indent=4)
+                        count+=1
 
             # end of category
             if node.attrib.get("class") == "row":
                 current_category = ""
 
-        today = date.today()
-
-        columns["link"] = ["https://www.cdc.gov/coronavirus/2019-ncov/faq.html"] * len(columns["question"])
-        columns["name"] = ["CDC General FAQ"] * len(columns["question"])
-        columns["source"] = ["Center for Disease Control and Prevention (CDC)"] * len(columns["question"])
-        columns["country"] = ["USA"] * len(columns["question"])
-        columns["region"] = [""] * len(columns["question"])
-        columns["city"] = [""] * len(columns["question"])
-        columns["lang"] = ["en"] * len(columns["question"])
-        columns["last_update"] = [today.strftime("%Y/%m/%d")] * len(columns["question"])
-
-        return columns
+        #return columns
 
 
 
