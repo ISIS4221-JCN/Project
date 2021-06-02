@@ -1,0 +1,29 @@
+{
+  "start_year": 2020,
+  "start_month": 1,
+  "start_day": 1,
+  "end_year": 2021,
+  "end_month": 5,
+  "end_day": 31,
+  "search": {
+      "fr":{
+          "countries":[
+              "BE", "BJ", "BF", "BI",
+              "CM", "CA", "CF", "TD",
+              "KM", "CG", "DJ", "CD",
+              "CQ", "FR", "GA", "GN",
+              "HT", "CI", "LU", "MG",
+              "ML", "MC", "MA", "NE",
+              "RW", "SN", "SC", "CH",
+              "TG", "TN", "VU"
+          ],
+          "keywords":[
+              "covid", "coronavirus", "pandemie",
+              "vaccin", "vaccination", "reouverture des ecoles",
+              "hopital", "soins intensifs", "aeroports", "quarantaine",
+              "symptomes", "sante mentale", "violence domestique",
+              "restrictions", "travail a domicile", "restrictions de voyage"
+          ]
+      }
+  }
+}
