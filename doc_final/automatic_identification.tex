@@ -1,3 +1,5 @@
+\section{Identificación Automática}
+
 \subsection{Descripción del problema}
 Según \cite{DC_SPRINGER} la clasificación de texto se define como la asignación de etiquetas a un documento textual basado en su contenido. En este orden de ideas, este aparte del proyecto busca clasificar texto dado que se le van a asignar etiquetas a documentos de un corpus. La tarea de clasificación de texto puede ser entendida como binaria o no binaria, dependiendo de la cardinalidad del conjunto de etiquetas disponibles para la tarea. Un esquema de clasificación binario consta de dos clases únicamente, que suelen ser referidos como una clase positiva o una clase negativa. Por el contrario, un esquema no binario suele contar con más de dos etiquetas.
 
@@ -12,15 +14,34 @@ Antes de resolver el problema de clasificación de texto se procede a realizar l
     \item 
 \end{itemize}
 
-\subsection{Aproximación no supervisada}
+\subsection{Metodología de solución}
+A partir de la revisión del estado del arte se pudo establecer que cualquier estrategia de solución debe contar con una serie de pasos estándar. El primer paso consiste en un preprocesamiento de los datos en la que se eliminan las palabras comunes, se eliminan signos de puntuación y se estandarizan y separan las palabras del documento. Debido a que en el preprocesamiento se eliminan palabras claves y se estandarizan las palabras resultantes, este paso es sensible al idioma en el cuál se esté trabajando. \\ 
 
+El segundo paso consiste en calcular la vectorización de los documentos. En este paso se transforma el documento preprocesado en un vector de números reales que lo representa. El cálculo de esta vectorización puede ser realizado mediante diferentes tipos de modelos como lo son BERT, Doc2Vec y otros. Como es de esperar, cada método presenta diferentes valores de desempeño y costo computacional diferentes por lo que deben ser seleccionados dependiendo de las necesidades del usuario. \\
 
-\subsection{Aproximación supervisada}
+El tercer paso corresponde a la clasificación de las vectorizaciones dependiendo de las necesidades específicas del problema. En este problema en específico es necesario clasificar aquellos documentos que estén relacionados a los siguientes temas:
 
+\begin{itemize}
+    \item Vacunas, vacunación y salud mental.
+    \item Reapertura de colegios/escuelas y violencia doméstica.
+\end{itemize}
 
-\subsection{Resultados}
+Para la clasificación se pueden emplear métodos supervisados y no supervisados dependiendo de los datos que se usen en el entrenamiento. Si bien las vectorizaciones pueden ser iguales para las dos aproximaciones, la diferencia principal radica en el uso de datos etiquetados para los modelos supervisados. A partir de la revisión del estado del arte, se determinó que para la clasificación de texto se  requiere de un mejor modelo de vectorización antes que uno de clasificación. En otras palabras, el buen desempeño de un clasificador de texto suele depender de la vectorización antes del clasificador.
 
 \subsubsection{Aproximación no supervisada}
+Para la aproximación no supervisada se parte de los textos originales derivados de la etapa de búsqueda de documentos. Estos textos son procesados con el fin de eliminar aquellas características que no aportan en el modelo de vectorización. Una vez se han procesado los datos, se procede a realizar la vectorización a partir del modelo de Doc2Vec. El modelo de Doc2Vec es usado para la vectorización debido a que puede admitir textos de longitud arbitraria y convertirlos en vectores de una dimensionalidad dada, en este caso de 100 unidades. Para entrenar el modelo de Doc2Vec se utiliza el 20\% de los datos disponibles, los cuales quedan almacenados en el modelo. \\
+
+Una vez se ha entrenado el modelo de Doc2Vec, se obtienen las vectorizaciones de este modelo en el conjunto de datos de entrenamiento. Los datos de entrenamiento corresponden al 85\% de los datos disponibles. Una vez se han generado los vectores de los documentos, se procede a almacenarlos, ya que serán reutilizados en la aproximación supervisada. A partir de los datos de la vectorización, se entrena un modelo de \textit{KMeans} al cuál se le asignan 16 posibles etiquetas. Una vez se ha entrenado el modelo, se procede a realizar la evaluación del mismo con el 15\% de los datos restantes. Las 16 etiquetas son seleccionadas debido a que es el número de etiquetas usadas durante la búsqueda de documentos. Vale la pena mencionar que debido a lo regular del texto estos modelos son entrenados con el corpus de las noticias. 
+
+\subsubsection{Aproximación supervisada}
+Partiendo de las vectorizaciones generadas en el desarrollo de la aproximación no supervisada se puede construir un clasificador correspondiente a una red neuronal. La red neuronal tendrá una capa de entrada, la cual recibe los valores de la vectorización, seguida de capas intermedias que finalizan en una única neurona. Esta neurona tiene una activación sigmoidea con el fin de realizar la clasificación binaria. Para entrenar la red neuronal es necesario conocer las etiquetas de los datos, las cuales se obtienen de las palabras claves usadas en la búsqueda de la noticia. Debido a que se ataca el problema como una clasificación binaria, se utilizan etiquetas positivas y negativas dependiendo de si las palabras claves hacen parte de los documentos buscados o no. 
+
+\subsection{Resultados}
+A continuación se presentan los resultados de las dos aproximaciones contempladas en el desarrollo de este problema:
+
+\subsubsection{Aproximación no supervisada}
+La figura X presenta 
+
 
 
 \subsubsection{Aproximación supervisada}
