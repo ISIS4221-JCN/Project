@@ -11,7 +11,10 @@ A continuación se presentan dos aproximaciones para solucionar el problema de c
 Antes de resolver el problema de clasificación de texto se procede a realizar la etapa de revisión de literatura. Dentro de la revisión de literatura se encontraron los siguientes artículos relevantes al problema de clasificación de texto:
 
 \begin{itemize}
-    \item 
+    \item En \textit{Message passing attention networks for document understanding} \cite{DC_REUTERS} se presenta un modelo de redes de grafos que se evalúa sobre el conjunto de datos de Reuters, entre otros, para su evaluación. Esta aproximación obtuvo un 97.44\% de exactitud sobre el conjunto de datos de \textit{Reuters}. Desafortunadamente este artículo presenta un modelo considerablemente complejo, con redes neuronales desarrolladas específicamente para este propósito y que no son fácilmente accesibles por parte del público. 
+    \item En \textit{Transfer learning in biomedical natural language processing: An evaluation of BERT and ELMo on ten benchmarking datasets.} \cite{DC_BERT_ELMO} se presentan los modelos de lenguaje de BERT y ELMo para resolver la tarea de clasificación de documentos relacionados al dominio biomédico. El mejor modelo presentado en el artículo corresponde a un modelo de BERT que fue entrenado exclusivamente sobre documentos biomédicos. Los modelos y el código fuente de este artículo están disponibles para el acceso por parte del público.
+    \item En \textit{DocBERT: BERT for Document Classification} \cite{DC_DOCBERT} se presenta un modelo destilado de BERT para la clasificación de documentos. Los autores de este artículo no se enfocan en obtener métricas de evaluación elevadas, sino en simplificar BERT para reducir su tiempo de entrenamiento e inferencia. El resultado final del artículo presenta un modelo destilado de BERT que reduce en treinta veces su cantidad de parámetros. Esta reducción en los parámetros implica que las métricas de evaluación caen en un 3\% como máximo en relación al modelo de BERT original.
+    \item Finalmente, en \textit{Text classification with word embedding regularization and soft similarity measure} \cite{DC_REG_EMBEDDING} se presenta un modelo de \textit{embedding}, o vectorización, basado en una regularización. Este artículo sobresale dado que reduce en un 39\% la tasa de error sin utilizar modelos profundos. Sin embargo, el código fuente para la vectorización no está disponible para ser usado por parte del público. 
 \end{itemize}
 
 \subsection{Metodología de solución}
@@ -40,11 +43,67 @@ Partiendo de las vectorizaciones generadas en el desarrollo de la aproximación 
 A continuación se presentan los resultados de las dos aproximaciones contempladas en el desarrollo de este problema:
 
 \subsubsection{Aproximación no supervisada}
-La figura X presenta 
+La figura \ref{fig:dc_cm_en} presenta la matriz de confusión para la identificación automática de documentos en inglés. Con el fin de facilitar la posible identificación de los \textit{clusters}, se agregan las palabras claves de los documentos usados en la validación. A partir de estas palabras claves, es posible identificar algunos \textit{clusters} de la matriz. El hecho de poder identificar algunos \textit{clusters} no implica que sean clasificados apropiadamente, sino que dicho \textit{clsters} está vinculado estrechamente a aquellos documentos que fueron buscados con la palabra clave. \\
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{results/AutomaticIdentification/cf_en.pdf}
+    \caption{Matriz de confusión para la clasificación no supervisada de documentos en inglés.}
+    \label{fig:dc_cm_en}
+\end{figure}
 
+De la figura \ref{fig:dc_cm_en} se puede inferir que términos como \textit{airport}, \textit{coronavirus}, \textit{household violence} y \textit{work from home} están vinculados estrechamente a \textit{clusters} con alta presencia de documentos. Por su parte, términos como \textit{covid}, \textit{hospital}, \textit{pandemic} y \textit{quarentine} no pueden ser asociados a un \textit{cluster} en particular. Una posible explicación a este fenómeno es que estos términos están presentes en la mayoría de los documentos usados en el modelo. Por su parte, la figura \ref{fig:dc_cm_es} presenta la matriz de confusión para la aproximación no supervisada en español. \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{results/AutomaticIdentification/cf_es.pdf}
+    \caption{Matriz de confusión para la clasificación no supervisada de documentos en español.}
+    \label{fig:dc_cm_es}
+\end{figure}
+
+En la matriz de confusión de la figura \ref{fig:dc_cm_es} se presenta un fenómeno similar a lo ocurrido en la figura \ref{fig:dc_cm_en}: algunos términos pueden ser directamente vinculados a un \textit{cluster} de la matriz, mientras que otros términos no pueden ser vinculados tan estrechamente. Algunos de los términos con una vinculación clara son \textit{aeropuertos}, \textit{reapertura de colegios}, \textit{restricciones}, \textit{vacunación} y \textit{UCI}. Los términos de \textit{cuarentena}, \textit{covid}, \textit{coronavirus} y \textit{trabajo en casa} son los que estaban vinculados a otros \textit{clusters}. Finalmente, la figura \ref{fig:dc_cm_fr} presenta la matriz de confusión asociada al idioma francés. \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{results/AutomaticIdentification/cf_fr.pdf}
+    \caption{Matriz de confusión para la clasificación no supervisada de documentos en francés.}
+    \label{fig:dc_cm_fr}
+\end{figure}
+
+En la matriz de confusión del idioma francés se presenta un caso diferente a los dos idiomas anteriores. Este caso consiste en que los \textit{clústers} no se pueden asociar tan fácilmente a un solo término, aunque sí se encuentran ciertas correlaciones entre ellos. Por ejemplo, para el \textit{cluster} 1 se tiene la presencia de las palabras \textit{quarantaine} (cuarentena) y \textit{sante mentale} (salud mental). De forma heurística se podrían relacionar los términos dado que se ha evidenciado un aumento en los problemas de salud mental debido a la cuarentena. Sin embargo, vale la pena notar que no es de esperar que el modelo capture esta clase de fenómenos de forma clara. 
 
 \subsubsection{Aproximación supervisada}
+La tabla \ref{tab:dc_supervised_metrics_2} presenta los resultados de la red neuronal evaluada para la clasificación sobre aquellos documentos relacionados a vacunas, vacunación y salud mental. Debido a que la clasificación de estos documentos corresponde a un problema no balanceado, se espera que el clasificador tenga un alto nivel de exactitud, como se evidencia en la tabla \ref{tab:dc_supervised_metrics_2}. Sin embargo, las métricas de precisión y \textit{recall} permiten determinar que el modelo es capaz de identificar más de la mitad de los documentos positivos en la clasificación. En las métricas de evaluación se puede interpretar que los resultados están relacionados al número de documentos disponibles para su entrenamiento. Esto se determina dado que el idioma inglés contaba con la mayor cantidad de documentos, seguido de francés y español. Por su parte, la precisión de los modelos sugiere el mismo orden. Un ordenamiento similar sucede con los valores de la métrica de \textit{recall}. 
 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \textbf{Idioma} & \textbf{Exactitud} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+        Inglés & 86.88\% & 71.34\% & 49.58\% \\
+        Español & 84.59\% & 59.22\% & 21.66\%  \\
+        Francés & 84.28\% & 66.55\% & 34.53\% \\
+    \end{tabular}
+    \caption{Resultados de la red neuronal entrenada para la aproximación supervisada en la identificación de vacunas, vacunación y salud mental.}
+    \label{tab:dc_supervised_metrics_2}
+\end{table}
+
+Por su parte, la tabla \ref{tab:dc_supervised_metrics_3} presenta los resultados de la clasificación sobre documentos relacionados a la apertura de colegios/escuelas y violencia doméstica. En este caso, la cantidad de documentos positivos es menor, por lo que se evidencia una mejora en la métrica de la exactitud. Sin embargo, para la precisión se tiene que el idioma inglés mantiene valores similares al anterior modelo, mientras que los idiomas español y francés reducen su rendimiento. Por parte del \textit{recall} todos los idiomas disminuyeron sus valores, lo cual podría ser explicado por la menor cantidad de datos positivos disponibles para el entrenamiento.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \textbf{Idioma} & \textbf{Exactitud} & \textbf{Precisión} & \textbf{Recall} \\ \hline
+        Inglés & 93.33\% & 71.64\% & 32.41\% \\
+        Español & 93.83\% & 57.66\% & 21.26\% \\
+        Francés & 92.13\% & 57.32\% & 19.34\% \\
+    \end{tabular}
+    \caption{Resultados de la red neuronal entrenada para la aproximación supervisada en la identificación de apertura de colegios/escuelas y violencia doméstica.}
+    \label{tab:dc_supervised_metrics_3}
+\end{table}
 
 \subsection{Conclusiones}
+\begin{itemize}
+    \item Dentro del dominio de los documentos relacionados a la pandemia del COVID-19 se presentan términos tanto independientes como ampliamente difundidos. Términos como \textit{COVID}, \textit{coronavirus} y \textit{pandemia} aparecen en documentos de distinta índole, haciendo parte de un contexto más que del enfoque principal de los mismos. Por este motivo, términos como \textit{violencia doméstica} y \textit{apertura de colegios} aparecen en menor proporción, lo cuál dificulta su identificación.
+    
+    \item Se evidenció que es práctica la clasificación de documentos mediante aproximaciones supervisadas y no supervisadas. Aunque la suposición de que la calidad de la clasificación depende principalmente de la vectorización, se pudo corroborar que el modelo utilizado puede influir considerablemente en las métricas de evaluación. La aproximación no supervisada permitió evidenciar que aquellos términos y documentos relacionados a un tema en específico pueden ser identificados directamente. Por otra parte, una aproximación supervisada permite evidenciar el aprendizaje del modelo al contar con métricas mayores a un clasificador aleatorio. 
+\end{itemize}
