@@ -16,6 +16,7 @@ def main(args):
     set_seed(args.seed)
     if not args.backwards:
         counter = len(os.listdir(os.path.join(args.path, 'FakeNews', args.lang)))
+        counter = 15377
         real_news_names = sorted(os.listdir(os.path.join(args.path, 'news' , args.lang + '/')))[counter:]
     else:
         counter = len(os.listdir(os.path.join(args.path, 'news', args.lang)))
@@ -39,7 +40,7 @@ def main(args):
             file = open(os.path.join(args.path, 'FakeNews', args.lang, 'fake_' + str(counter) + '.json'), 'w+', encoding='utf-8')
             json.dump(fake_news_dict, file, indent=4)
             file.close()
-            counter -= 1
+            counter += 1
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

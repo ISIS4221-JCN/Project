@@ -14,7 +14,7 @@ def main(args):
     # Dictionaries with words to find in tweets
     words_dict_schools = {'es': ['colegios', 'colegio', 'reapertura', 'educacion', 'profesores', 'estudiantes'],
                           'en': ['school', 'schools', 'reopening', 're-opening', 'teachers', 'teach', 'education'],
-                          'fr': ['école', 'écoles', 'réouverture', 'enseignants', 'enseignant', 'éducation']}
+                          'fr': ['école', 'écoles', 'réouverture', 'enseignants', 'enseignant', 'apprendre', 'éducation']}
 
     words_dict_violence = {'es': ['violencia intrafamiliar', 'intrafamiliar'],
                           'en': ['household violence', 'intrafamily', 'domestic violence'],
@@ -26,19 +26,16 @@ def main(args):
 
     words_dict_mental = {'es': ['suicidio', 'mental', 'esquizofrenia', 'paranoia', 'paranoico', 'deprimido', 'depresión', 'deprimida'],
                          'en': ['suicide', 'mental', 'esquizofrenia', 'paranoia', 'paranoid', 'depressed', 'depression'],
-                         'fr': ['suicide', 'mentale', 'schizophrénie', 'paranoia', 'paranoiaque', 'deprimee', 'deprime', 'depression']}
+                         'fr': ['suicide', 'mentale', 'schizophrénie', 'paranoïa', 'paranoïaque', 'déprimée', 'déprimé', 'dépression']}
 
     # Cases to choose word_dict
     if args.topic == 'schools':
         words_dict = words_dict_schools
     elif args.topic == 'vaccine':
         words_dict = words_dict_vaccine
-    elif args.topic == 'mental':
-        words_dict = words_dict_mental
-    elif args.topic == 'violence':
-        words_dict = words_dict_violence
     else:
-        raise('Failed')
+        words_dict = words_dict_violence
+
     # Function for the threads to exceute
     def chunk_diver(path, files, words):
         matching_files = []
@@ -84,27 +81,28 @@ def show_some_files(args):
     return matching_files
 
 def tag_data(args):
-    matching_files = main(args)
+    matching_files = show_some_files(args)
     codes_dict = {'vaccine': [1,0,0,0,0], 'schools': [0,0,1,0,0], 'violence': [0,0,0,1,0], 'mental': [0,1,0,0,0]}
     pos_dict = {'vaccine': 0, 'schools': 2, 'violence': 3, 'mental': 1}
     tags_dict = {}
     labels = ['vaccine', 'mental-health', 'school-reopneing', 'household-violence', 'none']
     tag_file_name = args.source  + '_' + args.lang + '_words.json'
-    exists =os.path.exists('./../tag_files/' + tag_file_name)
+    exists =os.path.exists(tag_file_name)
+    print(exists)
     if not (exists):
         for file in matching_files:
             tags_dict[file] = dict(zip(labels, codes_dict[args.topic]))
-        with open('./../tag_files/' + tag_file_name, 'w+') as tag_file:
+        with open(tag_file_name, 'w+') as tag_file:
             json.dump(tags_dict, tag_file)
     else:
-        with open('./../tag_files/' + tag_file_name, 'r') as tag_file:
+        with open(tag_file_name, 'r') as tag_file:
             tags_dict = json.load(tag_file)
         for file in matching_files:
             if file in tags_dict:
                 tags_dict[file][labels[pos_dict[args.topic]]] = True
             else:
                 tags_dict[file] = dict(zip(labels, codes_dict[args.topic]))
-        with open('./../tag_files/' + tag_file_name, 'w') as tag_file:
+        with open(tag_file_name, 'w') as tag_file:
             json.dump(tags_dict, tag_file)
 
 if __name__ == '__main__':
@@ -114,18 +112,5 @@ if __name__ == '__main__':
     parser.add_argument('--lang', type=str, default='es')
     parser.add_argument('--topic', type=str, default = 'violence')
     parser.add_argument('--num_files', type=int, default = 5)
-    parser.add_argument('--run_all', type=bool, default = True)
     args = parser.parse_args()
-    if args.run_all:
-        topics = ['violence', 'schools', 'vaccine', 'mental']
-        langs = ['es','fr','en']
-        sources = ['tweets', 'reddit', 'news']
-        for topic in topics:
-            args.topic = topic
-            for lang in langs:
-                args.lang = lang
-                for source in sources:
-                    args.source = source
-                    tag_data(args)
-    else:
-        tag_data(args)
+    tag_data(args)

@@ -5,7 +5,7 @@ Natural Language Processing Final Project.
 The instructions are available in _ETAPA I-ISIS4221.pdf_ and _ETAPA II-ISIS4221.pdf_.
 
 ## Dataset
-The dataset used for this project is available in this [link](PENDING).
+The dataset used for this project is available in this [link](https://drive.google.com/drive/folders/1ZnqEWKmEq_89lxjLBC8_ZcG6qRHVQHij?usp=sharing).
 
 ## Developers
 * Juan David García Hernández (jd.garciah@uniandes.edu.co)
