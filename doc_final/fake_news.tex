@@ -50,7 +50,31 @@ Como estrategia adicional de extracción de características se decidió hacer u
 Siguiendo con las propuestas detalladas en el estado del arte, se decide probar el desempeño de diferentes clasificadores como \textit{Logistic Regression}, \textit{Naïve Bayes}, \textit{Multilayer Perceptron} y \textit{Support Vector Machines}. Cada uno de ellos, con las diferentes propuestas de extracción de características previamente mencionadas. De cada uno de los doce experimentos se obtienen medidas de \textit{accuracy}, \textit{precision}, \textit{recall} y \textit{f1-score}, siendo este último el más importante, con el fin de poder comparar los resultados con los artículos presentados en la revisión bibliográfica del estado del arte.
 
 \subsection{Resultados}
+Como se describió previamente, evalúan los resultados obtenidos por diferentes modelos con diferentes métodos de extracción de características. En cada caso se evalúan \textit{accuracy}, \textit{precision}, \textit{recall} y \textit{f1-score}. Se muestran a continuación los resultados consolidados de los modelos evaluados y por último se concluirá sobre el mejor modelo (método de extracción de características y algoritmo de ML) para atacar este problema específico.
 
+\subsubsection{Comparación por método de extracción de características}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{results/FakeNewsDetection/feature_extraction_comparison.png}
+    \caption{Comparación de métodos de extracción de características}
+    \label{fig:fake_news_feature_extraction}
+\end{figure}
+
+\subsubsection{Comparación por modelo de ML}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{results/FakeNewsDetection/model_comparison.png}
+    \caption{Comparación de modelos de ML}
+    \label{fig:fake_news_models}
+\end{figure}
+
+\subsubsection{Comparación por idioma}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{results/FakeNewsDetection/language_comparison.png}
+    \caption{Comparación de idiomas}
+    \label{fig:fake_news_languages}
+\end{figure}
 
 \subsection{Conclusiones}
 
