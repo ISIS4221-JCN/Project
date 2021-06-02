@@ -44,13 +44,15 @@ Se preparó entonces un script que genera una noticia falsa para cada uno de los
 \subsection{Extracción de características}
 El proceso de extracción de características de cada documentos se realizó en primera instancia mediante técnicas tradicionales: TFIDF y \textit{Bag of words} con el fin de comparar con los resultados obtenidos en los artículos del primer grupo del estado del arte previamente descrito. Para ello se utilizó la librería \textit{Scikit-learn} y su función de \textit{text feature-extraction}. Se indicó que se deben retirar las \textit{stopwords} de cada uno de los idiomas intentados y retirar también las palabras que aparecen menos de 30 veces en el corpus. El procedimiento es bastante veloz para la extracción de características, a pesar de no ser muy eficiente en el manejo de memoria, como se ha mencionado en tareas previas. Tiene la notable ventaja de que no hay necesidad de recortar los documentos, pues la única consecuencia de un documento largo es que la normal de los vectores será un poco mayor,  pero no representa un problema, mientras que la tokenización con modelos preentrenados sí.\\
 
-Como estrategia adicional de extracción de características se decidió hacer uso de un modelo preentrando disponible en la librería \textit{Transformers}. De manera similar a como se implementó en el primer punto del proyecto, se define el modelo y se extrae los embeddings de la capa correspondiente a los \textit{embeddings} del documento. No obstante, esta estrategia presenta el grave problema de que es necesario recortar los documentos a un número específico de tokens para que la red reciba las entradas, lo que ocasiona fuerte pérdida de información. No obstante, se realizaron ensayos con ambos métodos de extracción de caracterísicas y se evaluaron sus resultados. A continuación, se detallan los métodos de clasificación utilizados.
+Como estrategia adicional de extracción de características se decidió hacer uso de un modelo preentrando disponible en la librería \textit{Transformers}. De manera similar a como se implementó en el primer punto del proyecto, se define el modelo y se extrae los \textit{embeddings} de la capa correspondiente a los \textit{embeddings} del documento. No obstante, esta estrategia presenta el grave problema de que es necesario recortar los documentos a un número específico de tokens para que la red reciba las entradas, lo que ocasiona fuerte pérdida de información. No obstante, se realizaron ensayos con ambos métodos de extracción de características y se evaluaron sus resultados. A continuación, se detallan los métodos de clasificación utilizados.
 
 \subsection{Modelos de clasificación}
 Siguiendo con las propuestas detalladas en el estado del arte, se decide probar el desempeño de diferentes clasificadores como \textit{Logistic Regression}, \textit{Naïve Bayes}, \textit{Multilayer Perceptron} y \textit{Support Vector Machines}. Cada uno de ellos, con las diferentes propuestas de extracción de características previamente mencionadas. De cada uno de los doce experimentos se obtienen medidas de \textit{accuracy}, \textit{precision}, \textit{recall} y \textit{f1-score}, siendo este último el más importante, con el fin de poder comparar los resultados con los artículos presentados en la revisión bibliográfica del estado del arte.
 
 \subsection{Resultados}
 Como se describió previamente, evalúan los resultados obtenidos por diferentes modelos con diferentes métodos de extracción de características. En cada caso se evalúan \textit{accuracy}, \textit{precision}, \textit{recall} y \textit{f1-score}. Se muestran a continuación los resultados consolidados de los modelos evaluados y por último se concluirá sobre el mejor modelo (método de extracción de características y algoritmo de ML) para atacar este problema específico.
+
+\input{results/FakeNewsDetection/results-df.txt}
 
 \subsubsection{Comparación por método de extracción de características}
 \begin{figure}
@@ -60,6 +62,8 @@ Como se describió previamente, evalúan los resultados obtenidos por diferentes
     \label{fig:fake_news_feature_extraction}
 \end{figure}
 
+Como se muestra en la figura \ref{fig:fake_news_feature_extraction}, es evidente que el método de tokenización usando BERT no da resultados tan buenos como \textit{Bag of words} o \textit{TF-IDF}. Esta diferencia se debe a que el modelo BERT no fue ajustado ni afinado para el \textit{dataset} específico con el que se está trabajando actualmente, mientras que los otros dos fueron creados directamente teniendo en cuenta los documentos disponibles para la tarea. Se esperaría que los resultados al tener un modelo con la capacidad de BERT afinado específicamente para esta tarea mejoren notablemente, incluso superando los resultados de los otros dos métodos de extracción de características.
+
 \subsubsection{Comparación por modelo de ML}
 \begin{figure}
     \centering
@@ -67,6 +71,8 @@ Como se describió previamente, evalúan los resultados obtenidos por diferentes
     \caption{Comparación de modelos de ML}
     \label{fig:fake_news_models}
 \end{figure}
+
+La diferencia entre el desempeño de los modelos utilizados (\textit{véase fig. \ref{fig:fake_news_models}}) no es tan evidente como el caso previo de extractores de características. Regresión logística, red neuronal y máquina de soporte vectorial presentan resultados muy similares y buenos, mientras que \textit{Naïve Bayes} está ligeramente rezagado en resultados. No obstante, es necesario resaltar la velocidad de entrenamiento de NB. Esta diferencia puede atribuirse a que el único modelo generativo es NB, siendo todos los demás discriminativos. Esto da una idea de que el problema de detección de \textit{Fake News} es más bien discriminativo.
 
 \subsubsection{Comparación por idioma}
 \begin{figure}
