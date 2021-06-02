@@ -1,0 +1,50 @@
+\begin{longtable}{llllrrrr}
+\caption{Resultados de modelos de detección de noticias falsas}\\
+\toprule
+{} & model & features & lang &  accuracy &  precision &  recall &   f1 \\
+\midrule
+\endhead
+\midrule
+\multicolumn{8}{r}{{Continued on next page}} \\
+\midrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+0 &    NB &    tfidf &   en &      0.86 &       0.86 &    0.85 & 0.86 \\
+1 &    LR &    tfidf &   en &      0.95 &       0.97 &    0.93 & 0.95 \\
+2 &   MLP &    tfidf &   en &      0.95 &       0.94 &    0.97 & 0.95 \\
+3 &   SVM &    tfidf &   en &      0.97 &       0.99 &    0.95 & 0.97 \\
+4 &    NB &    count &   en &      0.89 &       0.87 &    0.91 & 0.89 \\
+5 &    LR &    count &   en &      0.95 &       0.96 &    0.94 & 0.95 \\
+6 &   MLP &    count &   en &      0.96 &       0.97 &    0.96 & 0.96 \\
+7 &   SVM &    count &   en &      0.92 &       1.00 &    0.85 & 0.92 \\
+0 &    NB &    tfidf &   es &      0.94 &       0.91 &    0.98 & 0.94 \\
+0 &    LR &    tfidf &   es &      0.98 &       0.98 &    0.97 & 0.98 \\
+0 &   MLP &    tfidf &   es &      0.98 &       0.98 &    0.99 & 0.98 \\
+0 &   SVM &    tfidf &   es &      0.99 &       0.99 &    0.99 & 0.99 \\
+0 &    NB &    count &   es &      0.92 &       0.89 &    0.96 & 0.92 \\
+0 &    LR &    count &   es &      0.99 &       0.99 &    0.99 & 0.99 \\
+0 &   MLP &    count &   es &      0.98 &       0.99 &    0.97 & 0.98 \\
+0 &   SVM &    count &   es &      0.97 &       0.98 &    0.95 & 0.97 \\
+0 &    NB &    tfidf &   fr &      0.95 &       0.91 &    0.99 & 0.95 \\
+0 &    LR &    tfidf &   fr &      0.99 &       0.99 &    0.98 & 0.99 \\
+0 &   MLP &    tfidf &   fr &      1.00 &       1.00 &    1.00 & 1.00 \\
+0 &   SVM &    tfidf &   fr &      1.00 &       1.00 &    1.00 & 1.00 \\
+0 &    NB &    count &   fr &      0.93 &       0.89 &    0.99 & 0.93 \\
+0 &    LR &    count &   fr &      0.99 &       1.00 &    0.99 & 0.99 \\
+0 &   MLP &    count &   fr &      1.00 &       1.00 &    0.99 & 1.00 \\
+0 &   SVM &    count &   fr &      0.99 &       1.00 &    0.99 & 0.99 \\
+0 &    NB &     BERT &   en &      0.56 &       0.53 &    0.95 & 0.68 \\
+0 &    LR &     BERT &   en &      0.72 &       0.70 &    0.79 & 0.74 \\
+0 &   MLP &     BERT &   en &      0.72 &       0.75 &    0.71 & 0.73 \\
+0 &   SVM &     BERT &   en &      0.69 &       0.66 &    0.82 & 0.73 \\
+0 &    NB &     BERT &   es &      0.42 &       0.84 &    0.06 & 0.11 \\
+0 &    LR &     BERT &   es &      0.73 &       0.74 &    0.85 & 0.79 \\
+0 &   MLP &     BERT &   es &      0.73 &       0.76 &    0.80 & 0.78 \\
+0 &   SVM &     BERT &   es &      0.69 &       0.67 &    0.93 & 0.78 \\
+0 &    NB &     BERT &   fr &      0.48 &       0.92 &    0.09 & 0.16 \\
+0 &    LR &     BERT &   fr &      0.74 &       0.76 &    0.77 & 0.77 \\
+0 &   MLP &     BERT &   fr &      0.72 &       0.74 &    0.79 & 0.76 \\
+0 &   SVM &     BERT &   fr &      0.68 &       0.70 &    0.75 & 0.73 \\
+\end{longtable}
