@@ -4,11 +4,12 @@ from datetime import date
 import scrapy
 import json
 
-pg_count = 0
+count = 0
+lang = 'fr'
 
 class CovidScraper(scrapy.Spider):
     # Language
-    lang = 'fr'
+    global lang
     name = "WHO_scraper"
 
     # WHO FAQ URLs
@@ -67,9 +68,8 @@ class CovidScraper(scrapy.Spider):
                           f"https://www.who.int/{lang}/emergencies/diseases/novel-coronavirus-2019/question-and-answers-hub/q-a-detail/coronavirus-disease-(covid-19)-vaccines-safety",
                           f"https://www.who.int/{lang}/emergencies/diseases/novel-coronavirus-2019/question-and-answers-hub/q-a-detail/coronavirus-disease-covid-19-travel-advice-for-the-general-public"]
     def parse(self, response):
-        global pg_count
-        lang = 'fr'
-        docs = {
+        global count, lang
+        doc = {
             "title": [],
             "text": [],
             "link": [],
@@ -78,6 +78,8 @@ class CovidScraper(scrapy.Spider):
             "lang": [],
             "last_update": [],
         }
+
+        today = date.today()
 
         QUESTION_ANSWER_SELECTOR = ".sf-accordion__panel"
         QUESTION_SELECTOR = ".sf-accordion__link::text"
@@ -94,21 +96,17 @@ class CovidScraper(scrapy.Spider):
             answer_html = " ".join(answer_html).strip()
 
             # add question-answer pair to data dictionary
-            docs["title"].append(question)
-            docs["text"].append(answer)
+            doc = {}
+            doc["title"] = question
+            doc["text"]= answer
+            doc["link"] = [response.url]
+            doc["name"] = ["Q&A on coronaviruses (COVID-19)"]
+            doc["source"] = ["World Health Organization (WHO)"]
+            doc["lang"] = [lang]
+            doc["last_update"] = [today.strftime("%Y/%m/%d")]
 
-        today = date.today()
+            with open(f'{lang}/WHO_{count}.json', 'w') as fp:
+                json.dump(doc, fp, sort_keys=True, indent=4)
+                count+=1
 
-        docs["link"] = [response.url] * len(docs["title"])
-        docs["name"] = ["Q&A on coronaviruses (COVID-19)"] * len(docs["title"])
-        docs["source"] = ["World Health Organization (WHO)"] * len(docs["title"])
-        docs["lang"] = [lang] * len(docs["title"])
-        docs["last_update"] = [today.strftime("%Y/%m/%d")] * len(docs["title"])
-
-        print(f'Number of docs: {len(docs["text"])}')
-        print(f'Doc titles: {docs["title"]}')
-        with open(f'{lang}/WHO_{pg_count}.json', 'w') as fp:
-            json.dump(docs, fp, sort_keys=True, indent=4)
-            pg_count+=1
-
-        #return columns
+        print(f"Retrieved {count} docs in {lang}")

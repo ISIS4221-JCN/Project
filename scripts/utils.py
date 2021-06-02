@@ -28,7 +28,8 @@ class Utils:
     def data_loader(self, lang, source,
                     total_data=None,
                     max_size = 400,
-                    return_dates = False):
+                    return_dates = False,
+                    return_titles = False):
         """ Function to retrieve tweet data in specified language
 
         Args:
@@ -37,15 +38,19 @@ class Utils:
             total_data (int): Total files to load
             max_size (int): Max length of loaded file's string
             return_dates (bool): Return dates or don't
+            return_titles (bool): Return titles or don't
 
         Returns:
             list: text list
             list: dates
+            list: titles
         """
+
         start = time.time()
-        def chunk_loader(path, files_list, return_dates):
+        def chunk_loader(path, files_list, return_dates, return_titles):
             data = []
             dates = []
+            titles = []
             for file in files_list:
                 with open(os.path.join(path, file), 'r+') as file_str:
                     data_dict = json.load(file_str)
@@ -59,7 +64,9 @@ class Utils:
                         date = data_dict['date']
                         parsed_date = self.date_parser[source](date)
                         dates.append(parsed_date)
-            return data, dates
+                    if return_titles:
+                        titles.append(data_dict['title'])
+            return data, dates, titles
 
         path = os.path.join(self.path_prefix, source, lang)
         files_list = os.listdir(path)
@@ -70,19 +77,22 @@ class Utils:
         lists = np.array_split(files_list, self.num_workers)
         data = []
         dates = []
+        titles = []
         print("Starting {} threads to load {} documents from {} in {}".format(self.num_workers, total_data, source, lang))
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = []
             for files_list in lists:
-                futures.append(executor.submit(chunk_loader, path, files_list, return_dates))
+                futures.append(executor.submit(chunk_loader, path, files_list, return_dates, return_titles))
             for future in concurrent.futures.as_completed(futures):
                 data = data + future.result()[0]
                 dates = dates + future.result()[1]
+                titles = titles + future.result()[2]
+
         elapsed_time = time.time() - start
 
         print("Loaded {} files in {:.2f} seconds.".format(len(data), elapsed_time))
         print("Removed {} files becasuse they were too large".format(total_data - len(data)))
-        return data, dates
+        return data, dates, titles
 
     def preprocessing(self, text,
                         stop_words = None,
