@@ -7,9 +7,10 @@ from tqdm import tqdm
 
 def main(args):
     """ Function to check if words exist in tweets data in specified language
-
     Args:
         args (dict): dict containing script arguments
+    Returns:
+        list: File names that contain words in given list
     """
     # Dictionaries with words to find in tweets
     words_dict_schools = {'es': ['colegios', 'colegio', 'reapertura', 'educacion', 'profesores', 'estudiantes'],
@@ -74,6 +75,12 @@ def main(args):
     return matching_files_all
 
 def show_some_files(args):
+    """ Shows some random files that will be tagged as of args.topic
+    Args:
+        args (dict): dict containing script arguments
+    Returns:
+        list: File names that contain words in given list
+    """
     matching_files = main(args)
     files_list = random.sample(matching_files, args.num_files)
     path = os.path.join(args.path, args.source, args.lang)
@@ -84,6 +91,10 @@ def show_some_files(args):
     return matching_files
 
 def tag_data(args):
+    """ Creates or updates tag file
+    Args:
+        args (dict): dict containing script arguments
+    """
     matching_files = main(args)
     codes_dict = {'vaccine': [1,0,0,0,0], 'schools': [0,0,1,0,0], 'violence': [0,0,0,1,0], 'mental': [0,1,0,0,0]}
     pos_dict = {'vaccine': 0, 'schools': 2, 'violence': 3, 'mental': 1}

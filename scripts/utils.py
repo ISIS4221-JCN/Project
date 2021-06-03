@@ -120,7 +120,7 @@ class Utils:
             text = tokenizer.tokenize(text)
 
         # Converts to lowercase
-        text = "".join([char.lower() for char in text if char not in string.punctuation])
+        # text = "".join([char.lower() for char in text if char not in string.punctuation])
 
         # Lemmatizes text
         relevant_words=[]

@@ -1,5 +1,5 @@
 import os
-
+# File to check all folders and print total number of files
 langs = ['es','en','fr']
 sources = ['news', 'FakeNews', 'tweets', 'reddit', 'WHO_CDC']
 
