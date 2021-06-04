@@ -87,8 +87,43 @@
 
 \input{doc_final/QA_System}
 
-\section{Detección de noticias falsas}
 \input{doc_final/fake_news}
+
+\section{PENDING}
+
+\subsection{Tagging}
+\begin{itemize}
+    \item Testear siempre sobre el tagging manual.
+    \item keywords/tag\_data\_with\_words. (mergear sources)
+    \item Taggear con Doc2Vec chimba.
+\end{itemize}
+
+\subsection{Doc2Vec}
+\begin{itemize}
+    \item Entrenar con lo que más se pueda del corpus. Tokenizer tweets y noticias independientemente.
+    \item Inferir los embeddings de un porcentaje mejor del corpus.
+\end{itemize}
+
+\subsection{BERT}
+\begin{itemize}
+    \item Inferir un porcentaje menor. Dependiendo de la velocidad.
+    \item BERT sobre todo el corpus mochando la noticia. Seleccionar un modelo rápido ojala de covid.
+\end{itemize}
+* GUARDAR EMBEDDINGS COMO JSON POR SOURCE+LANG CON KEY NOMBRE DE ARCHIVO Y VALUE EMBEDDING
+\subsection{Clasificación}
+\begin{itemize}
+    \item 
+\end{itemize}
+
+\subsection{Distribución de trabajo}
+\begin{itemize}
+    \item [Nico] Entrenar doc2vec + preprocessing
+    \item [Nico] Inferir Doc2Vec
+    \item [Juan] Inferir con bert
+    \item [César] Pulir script para taggear con doc2vec
+    \item [Mañana miramos] Pulir unsupervised
+    \item [Mañana miramos] Clasificar
+\end{itemize}
 
 \newpage
 \bibliographystyle{unsrt}
