@@ -1,9 +1,8 @@
-import os, json, argparse
+import argparse
 from tqdm import tqdm
 import concurrent.futures
 import numpy as np
 import os, json, nltk, random, time, string
-from tqdm import tqdm
 
 def main(args):
     """ Function to check if words exist in tweets data in specified language
