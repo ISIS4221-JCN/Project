@@ -92,7 +92,7 @@ En la matriz de confusión de la figura \ref{fig:dc_cm_es} se presenta un fenóm
 
 En la matriz de confusión del idioma francés se presenta un caso diferente a los dos idiomas anteriores. Este caso consiste en que los \textit{clústers} no se pueden asociar tan fácilmente a un solo término, aunque sí se encuentran ciertas correlaciones entre ellos. Por ejemplo, para el \textit{cluster} 1 se tiene la presencia de las palabras \textit{quarantaine} (cuarentena) y \textit{sante mentale} (salud mental). De forma heurística se podrían relacionar los términos dado que se ha evidenciado un aumento en los problemas de salud mental debido a la cuarentena. Sin embargo, vale la pena notar que no es de esperar que el modelo capture esta clase de fenómenos de forma clara. 
 
-\subsubsection{Aproximación supervisada}
+\subsubsection{Aproximación supervisada (\textit{keywords})}
 La tabla \ref{tab:dc_supervised_metrics_2} presenta los resultados de la red neuronal evaluada para la clasificación sobre aquellos documentos relacionados a vacunas, vacunación y salud mental. Debido a que la clasificación de estos documentos corresponde a un problema no balanceado, se espera que el clasificador tenga un alto nivel de exactitud, como se evidencia en la tabla \ref{tab:dc_supervised_metrics_2}. Sin embargo, las métricas de precisión y \textit{recall} permiten determinar que el modelo es capaz de identificar más de la mitad de los documentos positivos en la clasificación. En las métricas de evaluación se puede interpretar que los resultados están relacionados al número de documentos disponibles para su entrenamiento. Esto se determina dado que el idioma inglés contaba con la mayor cantidad de documentos, seguido de francés y español. Por su parte, la precisión de los modelos sugiere el mismo orden. Un ordenamiento similar sucede con los valores de la métrica de \textit{recall}. 
 
 \begin{table}[H]
@@ -121,6 +121,9 @@ Por su parte, la tabla \ref{tab:dc_supervised_metrics_3} presenta los resultados
     \label{tab:dc_supervised_metrics_3}
 \end{table}
 
+\subsubsection{Aproximación supervisada (etiquetas)}
+
+
 \subsection{Discusión: Causas de error}
 
 A continuación se discuten algunos de los retos que se enfrentaron al momento de solucionar las anteriores tareas de clasificación y el análisis que se puede hacer para obtener mejores resultados:
@@ -130,9 +133,9 @@ A continuación se discuten algunos de los retos que se enfrentaron al momento d
     
     \item \textbf{Data desbalanceada:} Dado el proceso de recolección de la data y en general la distribución de la misma se obtuvo un \textit{dataset} con algunas clases muy desbalanceadas (i.e. violencia intrafamiliar y reapertura de colegios), lo que presentó dificultades a la hora de entrenar los modelos. Adicional a mejorar el proceso de etiquetado y la extracción de la data, se pueden hacer mejoras en el tipo de modelo utilizado (clasificador de una clase) y/o clasificador binario que uniera estas clases con poca data.
     
-    \item \textbf{Data de diferentes fuentes:} En este caso se trabajaron dominios y fuentes de datos muy diferentes, tanto en longitud como léxico (i.e. \textit{twitter} y noticias). Lo que presenta un reto aun mayor a la hora de tratar de clasificar la data. Adicionalmente, faltó hacer un énfasis mayor en el proceso de 
+    \item \textbf{Data de diferentes fuentes:} En este caso se trabajaron dominios y fuentes de datos muy diferentes, tanto en longitud como léxico (i.e. \textit{twitter} y noticias). Lo que presenta un reto aun mayor a la hora de tratar de clasificar la data. Adicionalmente, faltó hacer un énfasis mayor en el procesamiento adecuado para cada fuente de datos y un posible clasificador y representación de texto adecuada para cada fuente.
     
-    \item \textbf{Representación de texto:}
+    \item \textbf{Representación de texto:} Finalmente, faltó una mayor exploración en cuanto a los modelos utilizados para la representación de palabras, los cuales en este caso fueron dos: \textit{doc2vec} y \textit{embeddings} a partir de modelos contextuales. A pesar de que el primer caso demostró unos mejores resultados, esta aproximación tiene una serie de hiperparámetros ajustables a los que se les puede dar una mejor sintonización. Por su parte, en cuanto a los embeddings contextuales, el uso de un único modelo pre-entrenado 
 \end{itemize}
 
 \subsection{Conclusiones}
