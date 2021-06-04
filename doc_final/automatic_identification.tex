@@ -121,6 +121,20 @@ Por su parte, la tabla \ref{tab:dc_supervised_metrics_3} presenta los resultados
     \label{tab:dc_supervised_metrics_3}
 \end{table}
 
+\subsection{Discusión: Causas de error}
+
+A continuación se discuten algunos de los retos que se enfrentaron al momento de solucionar las anteriores tareas de clasificación y el análisis que se puede hacer para obtener mejores resultados:
+
+\begin{itemize}
+    \item \textbf{Proceso de etiquetado:} Por un lado, la cantidad de datos etiquetados de forma manual fue un porcentaje muy reducido del total y no se optimizó para obtener datos de las clases menos representativas (se hizo de forma aleatoria). Por otro lado, los enfoques utilizados para el etiquetado automático, a través de palabras clave y \texttt{doc2vec} no necesariamente reflejan la etiqueta real de los datos.
+    
+    \item \textbf{Data desbalanceada:} Dado el proceso de recolección de la data y en general la distribución de la misma se obtuvo un \textit{dataset} con algunas clases muy desbalanceadas (i.e. violencia intrafamiliar y reapertura de colegios), lo que presentó dificultades a la hora de entrenar los modelos. Adicional a mejorar el proceso de etiquetado y la extracción de la data, se pueden hacer mejoras en el tipo de modelo utilizado (clasificador de una clase) y/o clasificador binario que uniera estas clases con poca data.
+    
+    \item \textbf{Data de diferentes fuentes:} En este caso se trabajaron dominios y fuentes de datos muy diferentes, tanto en longitud como léxico (i.e. \textit{twitter} y noticias). Lo que presenta un reto aun mayor a la hora de tratar de clasificar la data. Adicionalmente, faltó hacer un énfasis mayor en el proceso de 
+    
+    \item \textbf{Representación de texto:}
+\end{itemize}
+
 \subsection{Conclusiones}
 \begin{itemize}
     \item Dentro del dominio de los documentos relacionados a la pandemia del COVID-19 se presentan términos tanto independientes como ampliamente difundidos. Términos como \textit{COVID}, \textit{coronavirus} y \textit{pandemia} aparecen en documentos de distinta índole, haciendo parte de un contexto más que del enfoque principal de los mismos. Por este motivo, términos como \textit{violencia doméstica} y \textit{apertura de colegios} aparecen en menor proporción, lo cuál dificulta su identificación.
