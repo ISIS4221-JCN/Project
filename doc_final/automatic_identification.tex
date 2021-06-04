@@ -48,9 +48,9 @@ Partiendo de los vectores generados en la etapa anterior, es posible entrenar un
 \subsubsection{Aproximación supervisada}
 De forma similar a la aproximación no supervisada, los modelos supervisados usarán como entrada los vectores generados con los dos modelos presentados previamente. Adicionalmente, dado que se trata de una aproximación supervisada, los datos deberán estar etiquetados. Dentro de esta aproximación se contemplan dos opciones para conocer las etiquetas de los datos. La primera consiste en usar palabras claves presentes en los documentos. Para esta opción se diferencia entre los documentos de noticias y los de redes sociales, ya que los primeros tienen asociados la palabra clave usada en la búsqueda, mientras que los segundos pueden etiquetarse en caso tal que presenten dichas palabras claves. La segunda opción de etiquetado consiste en un etiquetado manual.\\
 
-Teniendo en cuenta el enunciado de los problemas, en los que se deben distinguir documentos de categorías específicas, se propone una solución dentro del esquema de una clasificación binaria. En este sentido, se establece una clase positiva, cuando el documento hace parte de las categorías que se desean identificar, y una clase negativa, cuando el documento no hace parte de estas. Dado que se realiza la clasificación sobre dos conjuntos de categorías, se deben entrenar modelos independientes para cada caso. \\
+Teniendo en cuenta el enunciado de los problemas, en los que se deben distinguir documentos de categorías específicas, se propone una solución dentro del esquema de una clasificación binaria. En este sentido, se establece una clase positiva, cuando el documento hace parte de las categorías que se desean identificar, y una clase negativa, cuando el documento no hace parte de estas. Dado que se realiza la clasificación sobre dos conjuntos de categorías, se deben entrenar modelos independientes para cada caso.\\
 
-Los modelos que serán considerados para realizar la clasificación incluyen aproximaciones de aprendizaje profundo, como lo son redes neuronales, y aproximaciones correspondientes a algoritmos como máquinas de vectores de soporte (SVMs, \textit{Support Vector Machines}) o regresiones logísticas, entre otros. En términos generales, lo que se busca con la selección de clasificador es encontrar un modelo capaz de reconocer la información contenida en los vectores con el fin de distinguir si pertenecen a una clase o no.
+El modelo propuesto para la clasificación de estos datos es una red neuronal considerablemente pequeña con una sola capa de entre 100 y 200 neuronas seguidas de una capa de regularización \textit{Dropout} con una probabilidad de entre 0.4 y 0.5. Esta red se entrena durante 100 a 200 épocas en el caso de BERT y 1500 a 2000 en el caso de doc2vec, pues las evidencias de la historia del entrenamiento mostraban que el resultado seguía incrementando al menos en el caso del \textit{accuracy}. Se utilizó el algoritmo \textit{adam} con un LR de entre 0.001 y 0.05 dependiendo del idioma y del embedding. Se muestran los resultados en la sección correspondiente.
 
 \subsection{Etiquetado de datos}
 Como se mencionó previamente, se utilizan tres estrategias. La primera de ellas es manual, en donde se crea un \textit{script} que permite seleccionar fuente e idioma de los archivos a etiquetar. Este los imprime en pantalla y da el espacio al usuario para indicar un vector de cinco posiciones correspondientes a vacunas, salud mental, reapertura de colegios, violencia intrafamiliar y ninguna de las anteriores. En caso de que se obtenga un archivo que habla de vacunas y reapertura de colegios sería un vector 10100. El código se encarga de operar el vector para almacenarlo en diccionarios.\\
@@ -122,7 +122,26 @@ Por su parte, la tabla \ref{tab:dc_supervised_metrics_3} presenta los resultados
 \end{table}
 
 \subsubsection{Aproximación supervisada (etiquetas)}
+En la tabla siguiente se muestran los resultados de los modelos implementados para el problema de clasificación de texto. Es evidente que el resultado no es cercano al esperado, pues el \textit{accuracy} es exageradamente bajo, lo que invita a pesar que el desbalance de clases fue tan fuerte que provoca que la red se incline a predecir únicamente a una clase. No obstante, teniendo en cuenta que esa clase que tiende a predecir siempre es mayoritaria, los resultados de \textit{precision} y \textit{recall} son considerablemente mejores. Esto muestra la importancia de tener en cuenta siempre todas las métricas posibles y realizar el respectivo análisis.
+\input{results/Classification/results-df.txt}
 
+Ahora bien, en el caso de comparación del desempeño con diferentes idiomas, el resultado se muestra en la figura \ref{fig:lang_class_comp}. Al igual que en otros casos vistos, los resultados de modelos son relativamente similares en entre sí, con la claridad de que francés alcanza mejores resultados en las últimas tres métricas extraídas.\\
+
+\begin{figure}
+    \centering
+    \includegraphics[width = \textwidth]{results/Classification/lang_comparison.png}
+    \caption{Comparación de lenguajes en clasificación de texto}
+    \label{fig:lang_class_comp}
+\end{figure}
+
+Por su parte, la comparación de los resultados según el tipo de \textit{embedding}. Evidentemente, el resultado para doc2vec es muchísimo mejor en la métrica de \textit{accuracy}, pues con \textit{embeddings} de BERT a duras penas se levanta de 0. Esto se le atribuye principalmente a el hecho de que cada uno de los vectores que se obtiene en doc2vec se basan en un modelo entrenado precisamente para el dataset en cuestión, mientas que la red con la que se tokenizó (BERT) no estaba afinada ni entrenada sobre el dataset. Esto despierta aún más el interés en los resultados que podría proveer BERT al afinarla sobre el dataset y tarea específica.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{results/Classification/embedding.png}
+    \caption{Comparación de embeddings para clasificación de texto}
+    \label{fig:my_label}
+\end{figure}
 
 \subsection{Discusión: Causas de error}
 
@@ -135,7 +154,7 @@ A continuación se discuten algunos de los retos que se enfrentaron al momento d
     
     \item \textbf{Data de diferentes fuentes:} En este caso se trabajaron dominios y fuentes de datos muy diferentes, tanto en longitud como léxico (i.e. \textit{twitter} y noticias). Lo que presenta un reto aun mayor a la hora de tratar de clasificar la data. Adicionalmente, faltó hacer un énfasis mayor en el procesamiento adecuado para cada fuente de datos y un posible clasificador y representación de texto adecuada para cada fuente.
     
-    \item \textbf{Representación de texto:} Finalmente, faltó una mayor exploración en cuanto a los modelos utilizados para la representación de palabras, los cuales en este caso fueron dos: \textit{doc2vec} y \textit{embeddings} a partir de modelos contextuales. A pesar de que el primer caso demostró unos mejores resultados, esta aproximación tiene una serie de hiperparámetros ajustables a los que se les puede dar una mejor sintonización. Por su parte, en cuanto a los embeddings contextuales, el uso de un único modelo pre-entrenado 
+    \item \textbf{Representación de texto:} Finalmente, faltó una mayor exploración en cuanto a los modelos utilizados para la representación de palabras, los cuales en este caso fueron dos: \textit{doc2vec} y \textit{embeddings} a partir de modelos contextuales. A pesar de que el primer caso demostró unos mejores resultados, esta aproximación tiene una serie de hiperparámetros ajustables a los que se les puede dar una mejor sintonización. Por su parte, en cuanto a los embeddings contextuales, el uso de un único modelo pre-entrenado (con datos de covid), para todos los idiomas y todas las fuentes de datos, no es necesariamente la mejor representación. Además de que estas representaciones se pueden ajustar a cada uno de los idiomas y fuentes de información, un \textit{fine-tuning} con el \textit{dataset} propio y el uso de modelos más elaborados, puede brindar beneficios a la hora de clasificar.
 \end{itemize}
 
 \subsection{Conclusiones}
