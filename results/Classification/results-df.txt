@@ -1,0 +1,20 @@
+\begin{longtable}{lllrrrr}
+\caption{Resultados de clasificación de texto}\\
+\toprule
+{} & lang & embedding &  accuracy &  precision &  recall &  f1\_score \\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{{Continued on next page}} \\
+\midrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+0 &   fr &      bert &      0.06 &       0.92 &    0.92 &      0.92 \\
+1 &   fr &   doc2vec &      0.15 &       0.90 &    0.90 &      0.90 \\
+2 &   es &      bert &      0.04 &       0.86 &    0.86 &      0.86 \\
+3 &   es &   doc2vec &      0.52 &       0.83 &    0.83 &      0.83 \\
+4 &   en &      bert &      0.01 &       0.85 &    0.85 &      0.85 \\
+5 &   en &   doc2vec &      0.00 &       0.82 &    0.82 &      0.82 \\
+\end{longtable}
